@@ -63,7 +63,7 @@ async def unload(ctx, extension):
 async def on_ready():
     print("{0.user} is online".format(client))
     report = client.get_channel(int(config["Notifs"]["Reports"]))
-    await report.send("Report: {0.user} is online.".format(client))
+    await report.send("Report: {0.user} is online in Heroku.".format(client))
 
 #run
 for filename in os.listdir("./cogs"):
