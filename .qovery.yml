@@ -4,7 +4,7 @@ application:
   project: "Schwi discord bot"
   organization: "QoveryCommunity"
   cpu: 1
-  ram: 700MB
+  ram: 1GB
   storage:
   - name: "DISK"
     size: "10"
