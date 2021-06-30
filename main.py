@@ -3,8 +3,6 @@
 #imports
 import discord, time, sys, configparser, requests, json, os
 from discord.ext import commands
-from tkinter import *
-import tkinter.messagebox as TKmsg
 import mcsrvstat as MCsrv
 import CMD
 
@@ -15,23 +13,6 @@ config.read("Properties.ini")
 Token = str(config["Schwi"]["Token"])
 
 client = commands.Bot(command_prefix = str(config["Schwi"]["Prefix"]))
-
-#Instance
-def ShowWarning(TITLE, MESSAGE):
-    root = Tk()
-    root.withdraw()
-    TKmsg.showwarning(title=TITLE, message=MESSAGE)
-from tendo import singleton
-try:
-    me = singleton.SingleInstance()
-except:
-    warnThread = Thread(target=ShowWarning, args=("Error: Multiple Instance", "Main program is already running."))
-    warnThread.start()
-    WriteF("Error: Reject launch\nMain program is already running", "MainReport.txt")
-    print("done")
-    sys.exit(-1)
-else:
-    pass
 
 #Commands
 CMD.Process(client)
