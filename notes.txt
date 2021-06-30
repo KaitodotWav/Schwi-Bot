@@ -1,2 +1,13 @@
 even loop = @commands.Cog.listener()
 commands = @commands.command()
+
+heroku bot name: schwi-discord-bot
+
+commit changes to bot
+$ commit -am "notes"
+save:
+$git push heroku master
+fetch log:
+heroku logs -a schwi-discord-bot
+
+pip = requirements.txt
