@@ -31,7 +31,7 @@ class MCServersMonitor(commands.Cog):
                 serv.ping(f"{i}")
                 result = serv.result
                 confirmed = False
-
+                
                 #online check
                 if result["online"] != lserv["online"]:
                     checkres = []
@@ -52,10 +52,14 @@ class MCServersMonitor(commands.Cog):
                     if confirmed:        
                         if result["online"] == True:
                             for s in lserv["report"]:
-                                await self.Report(s, f"\"{i}\" server is online.")
+                                Nemb = discord.Embed(title="Server is now online.", color=0x00FF00)
+                                Nemb.set_footer(text="{}".format(result["hostname"]))
+                                await self.Report(s, embed=Nemb)
                         else:
                             for s in lserv["report"]:
-                                await self.Report(s, f"\"{i}\" server is offline.")
+                                Nemb = discord.Embed(title="Server is now offline.", color=0xFF0000)
+                                Nemb.set_footer(text="{}".format(result["hostname"]))
+                                await self.Report(s, embed=Nemb)
                         refresh = True
                         lserv["online"] = result["online"]
                 
@@ -67,11 +71,15 @@ class MCServersMonitor(commands.Cog):
                         for p in rplist:
                             if p not in lserv["players"]:
                                 for s in lserv["report"]:
-                                    await self.Report(int(s), f"{p} joined in \"{i}\" server.")
+                                    Nemb = discord.Embed(title=f"{p} joined the server", color=0xFFFF00)
+                                    Nemb.set_footer(text=f"{i}")
+                                    await self.Report(s, embed=Nemb)
                         for p in lserv["players"]:
                             if p not in rplist:
                                 for s in lserv["report"]:
-                                    await self.Report(s, f"{p} left in \"{i}\" server.")
+                                    Nemb = discord.Embed(title=f"{p} left the server", color=0xFFFF00)
+                                    Nemb.set_footer(text=f"{i}")
+                                    await self.Report(s, embed=Nemb)
                         refresh = True
                         lserv["players"] = rplist
                 except KeyError as e:
