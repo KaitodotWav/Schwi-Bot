@@ -15,12 +15,12 @@ class MCServersMonitor(commands.Cog):
         except:
             pass
         
-    async def ReportEmb(self, ID, emb):
+    async def ReportEmb(self, ID, EMB):
         report = self.client.get_channel(ID)
-            try:
-                await report.send(embed=emb)
-            except:
-                pass
+        try:
+            await report.send(embed=EMB)
+        except:
+            pass
 
     @tasks.loop(seconds=30)
     async def monitor(self):
