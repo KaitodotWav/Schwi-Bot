@@ -8,7 +8,7 @@ class MCServersMonitor(commands.Cog):
         self.client = client
         self.monitor.start()
 
-    async def Report(self, ID, content):
+    async def Report(self, ID, **content):
         report = self.client.get_channel(ID)
         try:
             await report.send(content)
