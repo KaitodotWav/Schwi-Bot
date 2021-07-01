@@ -72,7 +72,6 @@ for filename in os.listdir("./cogs"):
         try:
             client.load_extension(f"cogs.{filename[:-3]}")
         except Exception as e:
-            erremb = discord.Embed(title="Error!", description=f"{e}", color=0xFF0000)
-            await report.send(embed=erremb)
+            print(e)
     
 client.run(Token)
