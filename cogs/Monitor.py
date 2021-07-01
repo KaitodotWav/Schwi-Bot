@@ -8,12 +8,19 @@ class MCServersMonitor(commands.Cog):
         self.client = client
         self.monitor.start()
 
-    async def Report(self, ID, **content):
+    async def Report(self, ID, content):
         report = self.client.get_channel(ID)
         try:
             await report.send(content)
         except:
             pass
+        
+    async def ReportEmb(self, ID, emb):
+        report = self.client.get_channel(ID):
+            try:
+                await report.send(embed=emb)
+            except:
+                pass
 
     @tasks.loop(seconds=30)
     async def monitor(self):
@@ -54,12 +61,12 @@ class MCServersMonitor(commands.Cog):
                             for s in lserv["report"]:
                                 Nemb = discord.Embed(title="Server is now online.", color=0x00FF00)
                                 Nemb.set_footer(text="{}".format(result["hostname"]))
-                                await self.Report(s, embed=Nemb)
+                                await self.ReportEmb(s, embed=Nemb)
                         else:
                             for s in lserv["report"]:
                                 Nemb = discord.Embed(title="Server is now offline.", color=0xFF0000)
                                 Nemb.set_footer(text="{}".format(result["hostname"]))
-                                await self.Report(s, embed=Nemb)
+                                await self.ReportEmb(s, embed=Nemb)
                         refresh = True
                         lserv["online"] = result["online"]
                 
@@ -73,11 +80,11 @@ class MCServersMonitor(commands.Cog):
                                 for s in lserv["report"]:
                                     Nemb = discord.Embed(title=f"{p} joined the server", color=0xFFFF00)
                                     Nemb.set_footer(text=f"{i}")
-                                    await self.Report(s, embed=Nemb)
+                                    await self.ReportEmb(s, embed=Nemb)
                         for p in lserv["players"]:
                             if p not in rplist:
                                 for s in lserv["report"]:
-                                    Nemb = discord.Embed(title=f"{p} left the server", color=0xFFFF00)
+                                    Nemb = discord.EmbedEmb(title=f"{p} left the server", color=0xFFFF00)
                                     Nemb.set_footer(text=f"{i}")
                                     await self.Report(s, embed=Nemb)
                         refresh = True
