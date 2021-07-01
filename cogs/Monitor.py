@@ -84,9 +84,9 @@ class MCServersMonitor(commands.Cog):
                         for p in lserv["players"]:
                             if p not in rplist:
                                 for s in lserv["report"]:
-                                    Nemb = discord.EmbedEmb(title=f"{p} left the server", color=0xFFFF00)
+                                    Nemb = discord.Embed(title=f"{p} left the server", color=0xFFFF00)
                                     Nemb.set_footer(text=f"{i}")
-                                    await self.Report(s, embed=Nemb)
+                                    await self.ReportEmb(s, embed=Nemb)
                         refresh = True
                         lserv["players"] = rplist
                 except KeyError as e:
