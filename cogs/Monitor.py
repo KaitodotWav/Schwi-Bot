@@ -61,12 +61,12 @@ class MCServersMonitor(commands.Cog):
                             for s in lserv["report"]:
                                 Nemb = discord.Embed(title="Server is now online.", color=0x00FF00)
                                 Nemb.set_footer(text="{}".format(result["hostname"]))
-                                await self.ReportEmb(s, embed=Nemb)
+                                await self.ReportEmb(s, Nemb)
                         else:
                             for s in lserv["report"]:
                                 Nemb = discord.Embed(title="Server is now offline.", color=0xFF0000)
                                 Nemb.set_footer(text="{}".format(result["hostname"]))
-                                await self.ReportEmb(s, embed=Nemb)
+                                await self.ReportEmb(s, Nemb)
                         refresh = True
                         lserv["online"] = result["online"]
                 
@@ -80,13 +80,13 @@ class MCServersMonitor(commands.Cog):
                                 for s in lserv["report"]:
                                     Nemb = discord.Embed(title=f"{p} joined the server", color=0xFFFF00)
                                     Nemb.set_footer(text=f"{i}")
-                                    await self.ReportEmb(s, embed=Nemb)
+                                    await self.ReportEmb(s, Nemb)
                         for p in lserv["players"]:
                             if p not in rplist:
                                 for s in lserv["report"]:
                                     Nemb = discord.Embed(title=f"{p} left the server", color=0xFFFF00)
                                     Nemb.set_footer(text=f"{i}")
-                                    await self.ReportEmb(s, embed=Nemb)
+                                    await self.ReportEmb(s, Nemb)
                         refresh = True
                         lserv["players"] = rplist
                 except KeyError as e:
