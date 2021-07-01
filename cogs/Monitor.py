@@ -3,6 +3,9 @@ from discord.ext import commands, tasks
 import json, time
 import mcsrvstat as MCsrv
 
+#endpoints
+linkIco = "https://api.mcsrvstat.us/icon/<address>"
+
 class MCServersMonitor(commands.Cog):
     def __init__(self, client):
         self.client = client
@@ -12,6 +15,13 @@ class MCServersMonitor(commands.Cog):
         report = self.client.get_channel(ID)
         try:
             await report.send(content)
+        except:
+            pass
+        
+    async def ReportEmb(self, ID, EMB):
+        report = self.client.get_channel(ID)
+        try:
+            await report.send(embed=EMB)
         except:
             pass
 
@@ -31,7 +41,8 @@ class MCServersMonitor(commands.Cog):
                 serv.ping(f"{i}")
                 result = serv.result
                 confirmed = False
-
+                showIcon =  str(linkIco.replace("<address>", f"{i}"))
+                
                 #online check
                 if result["online"] != lserv["online"]:
                     checkres = []
@@ -52,10 +63,14 @@ class MCServersMonitor(commands.Cog):
                     if confirmed:        
                         if result["online"] == True:
                             for s in lserv["report"]:
-                                await self.Report(s, f"\"{i}\" server is online.")
+                                Nemb = discord.Embed(title="Server is now online.", color=0x00FF00)
+                                Nemb.set_footer(text=(result["hostname"]), icon_url=showIcon)
+                                await self.ReportEmb(s, Nemb)
                         else:
                             for s in lserv["report"]:
-                                await self.Report(s, f"\"{i}\" server is offline.")
+                                Nemb = discord.Embed(title="Server is now offline.", color=0xFF0000)
+                                Nemb.set_footer(text=str(result["hostname"]), icon_url=showIcon)
+                                await self.ReportEmb(s, Nemb)
                         refresh = True
                         lserv["online"] = result["online"]
                 
@@ -67,11 +82,15 @@ class MCServersMonitor(commands.Cog):
                         for p in rplist:
                             if p not in lserv["players"]:
                                 for s in lserv["report"]:
-                                    await self.Report(int(s), f"{p} joined in \"{i}\" server.")
+                                    Nemb = discord.Embed(title=f"{p} joined the server", color=0xFFFF00)
+                                    Nemb.set_footer(text=f"{i}", icon_url=showIcon)
+                                    await self.ReportEmb(s, Nemb)
                         for p in lserv["players"]:
                             if p not in rplist:
                                 for s in lserv["report"]:
-                                    await self.Report(s, f"{p} left in \"{i}\" server.")
+                                    Nemb = discord.Embed(title=f"{p} left the server", color=0xFFFF00)
+                                    Nemb.set_footer(text=f"{i}", icon_url=showIcon)
+                                    await self.ReportEmb(s, Nemb)
                         refresh = True
                         lserv["players"] = rplist
                 except KeyError as e:

@@ -3,6 +3,9 @@ from discord.ext import commands, tasks
 import json
 import mcsrvstat as MCsrv
 
+#endpoints
+linkIco = "https://api.mcsrvstat.us/icon/<address>"
+
 #other functions
 def LtoS(List):
     build = ""
@@ -23,7 +26,7 @@ class Minecraft(commands.Cog):
         if options == None:
             if serv.result["online"] == True:
                 emb = discord.Embed(title=serv.result["hostname"], description="status: Online")
-                #emb.set_thumbnail(url=str(serv.result["icon"]))
+                emb.set_thumbnail(url=linkIco.replace("<address>", serv.result["hostname"]))
                 emb.add_field(name="ip",value=serv.result["ip"])
                 emb.add_field(name="port",value=serv.result["port"])
                 emb.add_field(name="version",value=serv.result["version"], inline=False)
