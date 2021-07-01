@@ -64,12 +64,12 @@ class MCServersMonitor(commands.Cog):
                         if result["online"] == True:
                             for s in lserv["report"]:
                                 Nemb = discord.Embed(title="Server is now online.", color=0x00FF00)
-                                Nemb.set_footer(text="{}".format(result["hostname"]), icon_url=showIcon)
+                                Nemb.set_footer(text=(result["hostname"]), icon_url=showIcon)
                                 await self.ReportEmb(s, Nemb)
                         else:
                             for s in lserv["report"]:
                                 Nemb = discord.Embed(title="Server is now offline.", color=0xFF0000)
-                                Nemb.set_footer(text="{}".format(result["hostname"]), icon_url=showIcon)
+                                Nemb.set_footer(text=str(result["hostname"]), icon_url=showIcon)
                                 await self.ReportEmb(s, Nemb)
                         refresh = True
                         lserv["online"] = result["online"]
