@@ -3,6 +3,9 @@ from discord.ext import commands, tasks
 import json, time
 import mcsrvstat as MCsrv
 
+#endpoints
+linkIco = "https://api.mcsrvstat.us/icon/<address>"
+
 class MCServersMonitor(commands.Cog):
     def __init__(self, client):
         self.client = client
@@ -60,12 +63,12 @@ class MCServersMonitor(commands.Cog):
                         if result["online"] == True:
                             for s in lserv["report"]:
                                 Nemb = discord.Embed(title="Server is now online.", color=0x00FF00)
-                                Nemb.set_footer(text="{}".format(result["hostname"]))
+                                Nemb.set_footer(text="{}".format(result["hostname"]), linkIco.replace("<address>", f"{i}"))
                                 await self.ReportEmb(s, Nemb)
                         else:
                             for s in lserv["report"]:
                                 Nemb = discord.Embed(title="Server is now offline.", color=0xFF0000)
-                                Nemb.set_footer(text="{}".format(result["hostname"]))
+                                Nemb.set_footer(text="{}".format(result["hostname"]), linkIco.replace("<address>", f"{i}"))
                                 await self.ReportEmb(s, Nemb)
                         refresh = True
                         lserv["online"] = result["online"]
@@ -79,13 +82,13 @@ class MCServersMonitor(commands.Cog):
                             if p not in lserv["players"]:
                                 for s in lserv["report"]:
                                     Nemb = discord.Embed(title=f"{p} joined the server", color=0xFFFF00)
-                                    Nemb.set_footer(text=f"{i}")
+                                    Nemb.set_footer(text=f"{i}", icon_url=linkIco.replace("<address>", f"{i}"))
                                     await self.ReportEmb(s, Nemb)
                         for p in lserv["players"]:
                             if p not in rplist:
                                 for s in lserv["report"]:
                                     Nemb = discord.Embed(title=f"{p} left the server", color=0xFFFF00)
-                                    Nemb.set_footer(text=f"{i}")
+                                    Nemb.set_footer(text=f"{i}", linkIco.replace("<address>", f"{i}"))
                                     await self.ReportEmb(s, Nemb)
                         refresh = True
                         lserv["players"] = rplist
