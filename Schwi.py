@@ -16,8 +16,6 @@ Token = str(config["Schwi"]["Token"])
 
 client = commands.Bot(command_prefix = str(config["Schwi"]["Prefix"]))
 
-report = client.get_channel(int(config["Notifs"]["Reports"]))
-
 """
 #Instance
 def ShowWarning(TITLE, MESSAGE):
@@ -63,6 +61,7 @@ async def unload(ctx, extension):
     
 @client.event
 async def on_ready():
+    report = client.get_channel(int(config["Notifs"]["Reports"]))
     print("{0.user} is online".format(client))
     await report.send("Report: {0.user} is online in Heroku.".format(client))
 
