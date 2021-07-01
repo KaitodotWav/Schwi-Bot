@@ -41,6 +41,7 @@ class MCServersMonitor(commands.Cog):
                 serv.ping(f"{i}")
                 result = serv.result
                 confirmed = False
+                showIcon =  str(linkIco.replace("<address>", f"{i}"))
                 
                 #online check
                 if result["online"] != lserv["online"]:
@@ -63,12 +64,12 @@ class MCServersMonitor(commands.Cog):
                         if result["online"] == True:
                             for s in lserv["report"]:
                                 Nemb = discord.Embed(title="Server is now online.", color=0x00FF00)
-                                Nemb.set_footer(text="{}".format(result["hostname"]), linkIco.replace("<address>", f"{i}"))
+                                Nemb.set_footer(text="{}".format(result["hostname"]), icon_url=showIcon)
                                 await self.ReportEmb(s, Nemb)
                         else:
                             for s in lserv["report"]:
                                 Nemb = discord.Embed(title="Server is now offline.", color=0xFF0000)
-                                Nemb.set_footer(text="{}".format(result["hostname"]), linkIco.replace("<address>", f"{i}"))
+                                Nemb.set_footer(text="{}".format(result["hostname"]), icon_url=showIcon)
                                 await self.ReportEmb(s, Nemb)
                         refresh = True
                         lserv["online"] = result["online"]
@@ -82,13 +83,13 @@ class MCServersMonitor(commands.Cog):
                             if p not in lserv["players"]:
                                 for s in lserv["report"]:
                                     Nemb = discord.Embed(title=f"{p} joined the server", color=0xFFFF00)
-                                    Nemb.set_footer(text=f"{i}", icon_url=linkIco.replace("<address>", f"{i}"))
+                                    Nemb.set_footer(text=f"{i}", icon_url=showIcon)
                                     await self.ReportEmb(s, Nemb)
                         for p in lserv["players"]:
                             if p not in rplist:
                                 for s in lserv["report"]:
                                     Nemb = discord.Embed(title=f"{p} left the server", color=0xFFFF00)
-                                    Nemb.set_footer(text=f"{i}", linkIco.replace("<address>", f"{i}"))
+                                    Nemb.set_footer(text=f"{i}", icon_url=showIcon)
                                     await self.ReportEmb(s, Nemb)
                         refresh = True
                         lserv["players"] = rplist
