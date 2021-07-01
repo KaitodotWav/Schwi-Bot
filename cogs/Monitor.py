@@ -16,7 +16,7 @@ class MCServersMonitor(commands.Cog):
             pass
         
     async def ReportEmb(self, ID, emb):
-        report = self.client.get_channel(ID):
+        report = self.client.get_channel(ID)
             try:
                 await report.send(embed=emb)
             except:
