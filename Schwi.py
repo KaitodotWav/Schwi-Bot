@@ -16,6 +16,8 @@ Token = str(config["Schwi"]["Token"])
 
 client = commands.Bot(command_prefix = str(config["Schwi"]["Prefix"]))
 
+report = client.get_channel(int(config["Notifs"]["Reports"]))
+
 """
 #Instance
 def ShowWarning(TITLE, MESSAGE):
@@ -51,8 +53,9 @@ async def load(ctx, extension):
         client.load_extension(f"cogs.{extension}")
         await ctx.send(f"{extension} has been loaded")
     except Exception as e:
-        erremb = discord.Embed(title="Error!", description=f"e", color=0xFF0000)
+        erremb = discord.Embed(title="Error!", description=f"{e}", color=0xFF0000)
         await ctx.send(embed=erremb)
+        
 @client.command()
 async def unload(ctx, extension):
     client.unload_extension(f"cogs.{extension}")
@@ -61,7 +64,6 @@ async def unload(ctx, extension):
 @client.event
 async def on_ready():
     print("{0.user} is online".format(client))
-    report = client.get_channel(int(config["Notifs"]["Reports"]))
     await report.send("Report: {0.user} is online in Heroku.".format(client))
 
 #run
@@ -69,7 +71,8 @@ for filename in os.listdir("./cogs"):
     if filename.endswith(".py"):
         try:
             client.load_extension(f"cogs.{filename[:-3]}")
-        except discord.ext.commands.errors.ExtensionFailed as e:
-            print("Error: ", e)
+        except Exception as e:
+            erremb = discord.Embed(title="Error!", description=f"{e}", color=0xFF0000)
+            await report.send(embed=erremb)
     
 client.run(Token)
