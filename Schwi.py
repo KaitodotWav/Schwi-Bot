@@ -50,10 +50,9 @@ async def load(ctx, extension):
     try:
         client.load_extension(f"cogs.{extension}")
         await ctx.send(f"{extension} has been loaded")
-    except discord.ext.commands.errors.ExtensionNotLoaded as e:
-        await ctx.send(f"{e}")
-    except discord.ext.commands.errors.CommandInvokeError:
-        await ctx.send(f"Error: CommandInvokeError\n{extention} could not be loaded.")
+    except Exception as e:
+        erremb = discord.Embed(title="Error!", description=f"e", color=0xFF0000)
+        await ctx.send(embed=erremb)
 @client.command()
 async def unload(ctx, extension):
     client.unload_extension(f"cogs.{extension}")
