@@ -1,10 +1,13 @@
 import discord
 from discord.ext import commands, tasks
-import json, time
+import json, time, configparser
 import mcsrvstat as MCsrv
 
 #endpoints
 linkIco = "https://api.mcsrvstat.us/icon/<address>"
+
+config = configparser.ConfigParser()
+config.read("Properties.ini")
 
 class MCServersMonitor(commands.Cog):
     def __init__(self, client):
@@ -22,6 +25,13 @@ class MCServersMonitor(commands.Cog):
         report = self.client.get_channel(ID)
         try:
             await report.send(embed=EMB)
+        except:
+            pass
+
+    async def ReportFile(self, ID, path):
+        report = self.client.get_channel(ID)
+        try:
+            await report.send(file=discord.File(f"{path}"))
         except:
             pass
 
@@ -63,8 +73,8 @@ class MCServersMonitor(commands.Cog):
                     if confirmed:        
                         if result["online"] == True:
                             for s in lserv["report"]:
-                                Nemb = discord.Embed(title="Server is now online.", color=0x00FF00)
-                                Nemb.set_footer(text=(result["hostname"]), icon_url=showIcon)
+                                Nemb = discord.Embed(title="Server is now online.", icon_url=showIcon, color=0x00FF00)
+                                Nemb.set_footer(text=str(result["hostname"]))
                                 await self.ReportEmb(s, Nemb)
                         else:
                             for s in lserv["report"]:
@@ -101,6 +111,9 @@ class MCServersMonitor(commands.Cog):
                 cache[f"{i}"] = lserv
                 with open("mcsrvMonitor.json", "w", encoding="utf8") as F:
                     json.dump(cache, F, ensure_ascii=False, indent=4)
+
+                await self.ReportFile(int(config["Notifs"]["Logs"]), "mcsrvMonitor.json")
+                
 
     @commands.command()
     async def Monitor(self, ctx, option, *args):

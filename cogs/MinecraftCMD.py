@@ -81,7 +81,7 @@ class Minecraft(commands.Cog):
                 await ctx.send("{} is now removed in monitoring list.".format(serv.result["hostname"]))
         elif options == "dump":
             serv.dump("dumps\\{}.json".format(serv.result["hostname"]))
-            await ctx.send(file=discord.file("dumps\\{}.json".format(serv.result["hostname"])))
+            await ctx.send(file=discord.File("dumps\\{}.json".format(serv.result["hostname"])))
              
 def setup(client):
     client.add_cog(Minecraft(client))
