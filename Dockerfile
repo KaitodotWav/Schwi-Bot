@@ -1,8 +1,9 @@
-FROM metabase/metabase
-FROM python
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
-COPY . .
-EXPOSE 3000
-CMD ["Schwi.py"]
-ENTRYPOINT ["python"]
+FROM python:3
+
+COPY cogs /usr/local/cogs
+
+ADD Schwi.py / cogs
+
+RUN pip install -r ../requirements.txt
+
+CMD python -u Schwi.py
