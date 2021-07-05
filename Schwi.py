@@ -1,12 +1,9 @@
 #Schwi bot created by Kaito
 
 #imports
-import discord, time, sys, configparser, requests, json, os
+import discord, time, sys, configparser, requests, json, os, socket
 from discord.ext import commands
-#from tkinter import *
-#import tkinter.messagebox as TKmsg
-import mcsrvstat as MCsrv
-import CMD
+from KaitoUWU import CMD
 
 config = configparser.ConfigParser()
 config.read("Properties.ini")
@@ -56,14 +53,26 @@ async def load(ctx, extension):
         
 @client.command()
 async def unload(ctx, extension):
-    client.unload_extension(f"cogs.{extension}")
-    await ctx.send(f"{extension} has been unloaded")
+    try:
+        client.unload_extension(f"cogs.{extension}")
+        await ctx.send(f"{extension} has been unloaded")
+    except Exception as e:
+        erremb = discord.Embed(title="Error!", description=f"{e}", color=0xFF0000)
+        await ctx.send(embed=erremb)
     
 @client.event
 async def on_ready():
     report = client.get_channel(int(config["Notifs"]["Reports"]))
-    print("{0.user} is online".format(client))
-    await report.send("Report: {0.user} is online in Heroku.".format(client))
+    try:
+        host = socket.gethostname()
+        #report = client.get_channel(int(config["Notifs"]["Reports"]))
+        print(f"{client.user} is online in {host}")
+        await report.send(f"Report: {client.user} is online in {host}.")
+    except Exception as e:
+        print(e)
+        
+        print("{0.user} is online".format(client))
+        await report.send("Report: {0.user} is online.".format(client))
 
 #run
 for filename in os.listdir("./cogs"):
@@ -74,6 +83,11 @@ for filename in os.listdir("./cogs"):
             try:
                 client.load_extension(f"cogs.{filename[:-3]}")
             except Exception as e:
-                print(e)
-    
-client.run(Token)
+                print(f"Error!: {e}")
+try:
+    client.run(Token)
+except Exception as e:
+    if str(e) == "Cannot connect to host discord.com:443 ssl:default [getaddrinfo failed]":
+        print("Error! no internet.")
+    else:
+        print(e)

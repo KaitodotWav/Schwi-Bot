@@ -1,0 +1,39 @@
+{
+    "ignore": "this line should be ignored",
+    "aaternoo.aternos.me": {
+        "platform": "java",
+        "online": true,
+        "players": [
+            "Settohya"
+        ],
+        "report": [
+            859109696815497236,
+            859427664463921182,
+            798442828660998145
+        ]
+    },
+    "play.immortalrealms.co": {
+        "platform": "java",
+        "online": true,
+        "report": [
+            859109696815497236
+        ],
+        "players": []
+    },
+    "hololivefan.server.gamers.yt": {
+        "platform": "java",
+        "online": true,
+        "players": [
+            "Lavea",
+            "mayayam",
+            "Pizgirme",
+            "RedRou",
+            "TeemoShroom",
+            "UsadaPekoraOwO",
+            "YuseiGamePlay"
+        ],
+        "report": [
+            859109696815497236
+        ]
+    }
+}
