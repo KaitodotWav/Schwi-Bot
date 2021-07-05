@@ -1,7 +1,7 @@
 #Schwi bot created by Kaito
 
 #imports
-import discord, time, sys, configparser, requests, json, os, socket
+import discord, time, sys, configparser, requests, json, os
 from discord.ext import commands
 from KaitoUWU import CMD
 
@@ -64,6 +64,7 @@ async def unload(ctx, extension):
 async def on_ready():
     report = client.get_channel(int(config["Notifs"]["Reports"]))
     try:
+        import socket
         host = socket.gethostname()
         #report = client.get_channel(int(config["Notifs"]["Reports"]))
         print(f"{client.user} is online in {host}")
