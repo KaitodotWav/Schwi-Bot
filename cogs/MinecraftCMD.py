@@ -82,7 +82,7 @@ class Minecraft(commands.Cog):
                 with open("mcsrvMonitor.json", "w", encoding="utf8") as F:
                     json.dump(build, F, ensure_ascii=False, indent=4)
                 await ctx.send("{} is now removed in monitoring list.".format(serv.result["hostname"]))
-        elif options == "dump":
+        elif options[0] == "dump":
             serv.dump("dumps\\{}.json".format(serv.result["hostname"]))
             await ctx.send(file=discord.File("dumps\\{}.json".format(serv.result["hostname"])))
              
