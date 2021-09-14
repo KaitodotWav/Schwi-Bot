@@ -1,3 +1,5 @@
 discord
 configparse
 requests
+praw
+asyncpraw
