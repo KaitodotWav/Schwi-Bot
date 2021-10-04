@@ -29,7 +29,10 @@ class Minecraft(commands.Cog):
         if options[0] == "open":
             print("called")
             if serv.result["online"] == True:
-                emb = discord.Embed(title=serv.result["hostname"], description="status: Online")
+                try:
+                    emb = discord.Embed(title=serv.result["hostname"], description="status: Online")
+                except:
+                    emb = discord.Embed(title=serve.result["ip"], description="status: Online")
                 emb.add_field(name="ip",value=serv.result["ip"])
                 emb.add_field(name="port",value=serv.result["port"])
                 emb.add_field(name="version",value=serv.result["version"], inline=False)
@@ -39,7 +42,7 @@ class Minecraft(commands.Cog):
                 except:
                     pass
                 try:
-                    emb.set_thumbnail(url=linkIco.replace("<address>", serv.result["hostname"]))
+                    emb.set_thumbnail(url=linkIco.replace("<address>", serv.result["ip"]))
                 except:
                     emb.set_thumbnail(url=default_ico)
                 await ctx.send(embed=emb)
