@@ -32,7 +32,7 @@ class Minecraft(commands.Cog):
                 try:
                     emb = discord.Embed(title=serv.result["hostname"], description="status: Online")
                 except:
-                    emb = discord.Embed(title=serve.result["ip"], description="status: Online")
+                    emb = discord.Embed(title=serv.result["ip"], description="status: Online")
                 emb.add_field(name="ip",value=serv.result["ip"])
                 emb.add_field(name="port",value=serv.result["port"])
                 emb.add_field(name="version",value=serv.result["version"], inline=False)
