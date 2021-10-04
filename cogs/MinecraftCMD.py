@@ -5,6 +5,7 @@ from KaitoUWU import mcsrvstat as MCsrv
 
 #endpoints
 linkIco = "https://api.mcsrvstat.us/icon/<address>"
+default_ico = "https://cdn.discordapp.com/attachments/889038336453394433/894638342979878972/worldICO.png"
 
 #other functions
 def LtoS(List):
@@ -29,7 +30,6 @@ class Minecraft(commands.Cog):
             print("called")
             if serv.result["online"] == True:
                 emb = discord.Embed(title=serv.result["hostname"], description="status: Online")
-                emb.set_thumbnail(url=linkIco.replace("<address>", serv.result["hostname"]))
                 emb.add_field(name="ip",value=serv.result["ip"])
                 emb.add_field(name="port",value=serv.result["port"])
                 emb.add_field(name="version",value=serv.result["version"], inline=False)
@@ -38,6 +38,10 @@ class Minecraft(commands.Cog):
                     emb.add_field(name="list", value=LtoS(serv.result["players"]["list"]), inline=False)
                 except:
                     pass
+                try:
+                    emb.set_thumbnail(url=linkIco.replace("<address>", serv.result["hostname"]))
+                except:
+                    emb.set_thumbnail(url=default_ico)
                 await ctx.send(embed=emb)
             else:
                 emb = discord.Embed(title=ip, description="status: Offline")
