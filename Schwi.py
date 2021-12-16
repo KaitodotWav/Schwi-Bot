@@ -4,9 +4,11 @@
 import discord, time, sys, configparser, requests, json, os
 from discord.ext import commands
 from KaitoUWU import CMD
+from KaitoUWU import BotUtils
 
 config = configparser.ConfigParser()
 config.read("Properties.ini")
+errors = []
 
 #Auth
 Token = str(config["Schwi"]["Token"])
@@ -63,17 +65,24 @@ async def unload(ctx, extension):
 @client.event
 async def on_ready():
     report = client.get_channel(int(config["Notifs"]["Reports"]))
+    
     try:
         import socket
         host = socket.gethostname()
-        #report = client.get_channel(int(config["Notifs"]["Reports"]))
-        print(f"{client.user} is online in {host}")
-        await report.send(f"Report: {client.user} is online in {host}.")
     except Exception as e:
         print(e)
-        
-        print("{0.user} is online".format(client))
-        await report.send("Report: {0.user} is online.".format(client))
+        errors.append((type(e), e))
+        host = "unknown"
+    finally:
+        on_emb = discord.Embed(title=f"{client.user} is now online", description=f"Host:{host}", color=0x00FF00)
+        for i in errors:
+            print(i)
+            emb = BotUtils.EMBEDS(Type="error", title="Error!", description="while starting the bot.")
+            sendE = emb.get()
+            sendE.add_field(name=str(i[0]), value=str(i[1]))
+            await report.send(embed=sendE)
+        print(f"{client.user} is now online on host:{host}")
+        await report.send(embed=on_emb)
 
 #run
 for filename in os.listdir("./cogs"):
@@ -84,6 +93,7 @@ for filename in os.listdir("./cogs"):
             try:
                 client.load_extension(f"cogs.{filename[:-3]}")
             except Exception as e:
+                errors.append((type(e), e))
                 print(f"Error!: {e}")
 try:
     client.run(Token)

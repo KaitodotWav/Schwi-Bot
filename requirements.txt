@@ -3,3 +3,4 @@ configparse
 requests
 praw
 asyncpraw
+psycopg2

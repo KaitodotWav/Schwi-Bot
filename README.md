@@ -38,6 +38,4 @@ still not done but already functional
 a faster, less buggy and improved discord bot
 
 -------------------------------------------------------
-this bot also runs in my Heroku so you might see Heroku files in it
-like Procfile
--------------------------------------------------------
+
