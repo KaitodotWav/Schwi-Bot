@@ -27,9 +27,9 @@ class MCServersMonitor(commands.Cog):
         self.emb_err = BotUtils.EMBEDS(Type="error", title="Error!")
         self.emb_scc = BotUtils.EMBEDS(Type="success", title="Success!", color=0x00FF00)
         self.emb_fail = BotUtils.EMBEDS(Type="fail", title="Failed!", color=0xFFA500)
-        self.spams = []
+        #self.spams = []
         self.zoe = BotUtils.SENDER(client)
-        self.Annoy.start()
+        #self.Annoy.start()
 
     async def Report(self, ID, content):
         report = self.client.get_channel(ID)
