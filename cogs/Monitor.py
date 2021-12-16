@@ -106,6 +106,7 @@ class MCServersMonitor(commands.Cog):
         except Exception as e:
             raise MonitorError(e)
 
+    """
     @tasks.loop(seconds=5)
     async def Annoy(self):
         #print("called")
@@ -122,7 +123,6 @@ class MCServersMonitor(commands.Cog):
             mss += f"{i} "
         self.spams.append((ctx.channel.id, mss))
     
-    """
     @tasks.loop(seconds=30)
     async def Monitor(self):
         with open("mcsrvMonitor.json", "r", encoding="utf8") as F:
