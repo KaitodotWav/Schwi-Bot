@@ -1,6 +1,6 @@
 import asyncpraw as AP
 import asyncio
-import random, configparse
+import random, configparser
 
 class AgeException(Exception):
     pass
@@ -8,7 +8,7 @@ class AgeException(Exception):
 class OAUTHError(Exception):
     pass
 
-cache = configparse.Configparse()
+cache = configparser.ConfigParser()
 cache.read("Properties.ini")
 lib = cache["reddit"]
 
