@@ -40,4 +40,14 @@ still not done but already functional
 a faster, less buggy and improved discord bot
 
 -------------------------------------------------------
+Branches:
+My laptop is broken due to this reason i cannot delete unused branches
+on my repo so i have alot of them
+PAIN
+ill delete them if i can for now just deal with them
+
+--Main = main release and being used by the Schwi bot
+
+--Pub = beta release and being used by Poyoyo bot
+
 
