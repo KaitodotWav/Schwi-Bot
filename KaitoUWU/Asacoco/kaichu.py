@@ -9,7 +9,7 @@ class OAUTHError(Exception):
     pass
 
 cache = configparse.Configparse()
-cache.read("Preference.ini")
+cache.read("Properties.ini")
 lib = cache["reddit"]
 
 try:
