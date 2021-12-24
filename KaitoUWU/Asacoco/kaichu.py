@@ -1,15 +1,26 @@
 import asyncpraw as AP
 import asyncio
-import random
-
-reddit = AP.Reddit(
-    client_id="Y0Adwt_-GZkxqA",
-    client_secret="3ovAVyFwnS2d8T6U_N5XHfjdUZdDcA",
-    user_agent="Python Hololive Memes collector (by u/KaitodotWav)"
-    )
+import random, configparse
 
 class AgeException(Exception):
     pass
+
+class OAUTHError(Exception):
+    pass
+
+cache = configparse.Configparse()
+cache.read("Preference.ini")
+lib = cache["reddit"]
+
+try:
+    reddit = AP.Reddit(
+        client_id=lib["id"],
+        client_secret=lib["secret"],
+        user_agent=lib["agent"]
+        )
+
+except Exception as e:
+    raise OAUTHError(e)
 
 class Kaichu():
     def __init__(self, Subreddit=None):
