@@ -1,10 +1,20 @@
-import praw, random, requests
+import praw, random, requests, configparser
 from datetime import datetime
 
-reddit = praw.Reddit(client_id = 'Y0Adwt_-GZkxqA', 
-                     client_secret = '3ovAVyFwnS2d8T6U_N5XHfjdUZdDcA', 
-                     user_agent = 'Python Hololive Memes collector (by u/KaitodotWav)'
-                     )
+class OAUTHError(Exception):
+    pass
+
+cache = configparser.ConfigParser()
+cache.read("Properties.ini")
+lib = cache["reddit"]
+
+try:
+    reddit = praw.Reddit(client_id = lib["id"], 
+                         client_secret = lib["secret"], 
+                         user_agent = lib["agent"]
+                         )
+except Exception as e:
+    raise OAUTHError(e)
 
 def getContents(posts):
     image_urls = []
