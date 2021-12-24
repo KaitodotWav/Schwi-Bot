@@ -19,6 +19,8 @@ Folders:
 
 --  /dumps = dumping folder of servers meta data
 
+--  /KaitoUWU = all packages created for schwii
+
 
 
 Data files:
