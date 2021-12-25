@@ -2,7 +2,6 @@
 
 #imports
 import discord, time, sys, configparser, requests, json, os
-from urllib.parse import urlparse
 from discord.ext import commands
 from KaitoUWU import CMD
 from KaitoUWU import BotUtils
@@ -69,12 +68,7 @@ async def on_ready():
     
     try:
         import socket
-        hostn = socket.gethostname()
-        ip = socket.gethostbyname(hostn)
-        try:
-            host = urlparse(f"{ip}")
-        except:
-            host = hostn
+        host = socket.gethostname()
     except Exception as e:
         print(e)
         errors.append((type(e), e))
