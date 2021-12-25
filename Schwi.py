@@ -68,7 +68,7 @@ async def on_ready():
     
     try:
         import socket
-        host = socket.gethostname()
+        host = socket.gethostbyname(socket.gethostname())
     except Exception as e:
         print(e)
         errors.append((type(e), e))
