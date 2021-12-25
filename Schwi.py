@@ -69,7 +69,12 @@ async def on_ready():
     
     try:
         import socket
-        host = socket.gethostbyname(socket.gethostname())
+        hostn = socket.gethostname()
+        ip = socket.gethostbyname(hostn)
+        try:
+            host = urlparse(f"{ip}").netloc
+        except:
+            host = hostn
     except Exception as e:
         print(e)
         errors.append((type(e), e))
