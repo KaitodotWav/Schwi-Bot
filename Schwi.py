@@ -2,7 +2,7 @@
 
 #imports
 import discord, time, sys, configparser, requests, json, os
-from urllib.urlparse import urlparse
+from urllib.parse import urlparse
 from discord.ext import commands
 from KaitoUWU import CMD
 from KaitoUWU import BotUtils
