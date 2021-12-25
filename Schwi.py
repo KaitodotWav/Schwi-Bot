@@ -1,7 +1,7 @@
 #Schwi bot created by Kaito
 
 #imports
-import discord, time, sys, configparser, requests, json, os
+import discord, time, sys, configparser, requests, json, os, urlparse
 from discord.ext import commands
 from KaitoUWU import CMD
 from KaitoUWU import BotUtils
