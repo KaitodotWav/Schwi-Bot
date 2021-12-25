@@ -72,7 +72,7 @@ async def on_ready():
         hostn = socket.gethostname()
         ip = socket.gethostbyname(hostn)
         try:
-            host = urlparse(f"{ip}").netloc
+            host = urlparse(f"{ip}")
         except:
             host = hostn
     except Exception as e:
