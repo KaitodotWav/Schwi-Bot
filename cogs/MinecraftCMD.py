@@ -62,9 +62,9 @@ class Minecraft(commands.Cog):
                     await self.zoe.EditEMB(main_emb, emb)
             
             elif options[0] == "dump":
-                serv.dump("dumps\\{}.json".format(serv.result["hostname"]))
+                serv.dump("dumps_{}_{}.json".format(serv.result["ip"], serv.result["port"]))
                 await main_emb.delete()
-                await ctx.send(file=discord.File("dumps\\{}.json".format(serv.result["hostname"])))
+                await ctx.send(file=discord.File("dumps_{}_{}.json".format(serv.result["ip"], serv.result["port"]))
         except Exception as e:
             emb = self.emb_err.get(Des="while executing the command.")
             emb.add_field(name=str(type(e)), value=e)
