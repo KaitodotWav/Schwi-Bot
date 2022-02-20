@@ -1,10 +1,21 @@
 import requests, json
+from mcstatus import MinecraftServer as MCjava
+from mcstatus import MinecraftBedrockServer as MCbe
 
 jlink = "https://api.mcsrvstat.us/2/<address>"
 blink = "https://api.mcsrvstat.us/bedrock/2/<address>"
 
 class FetchError(Exception):
     pass
+
+class AMCstat():
+    def __init__(self, platform=None):
+        self.plat = platform
+
+    async def Jping(self, ip, mode="json"):
+        server = MCjava.lookup(ip)
+        res = server.json()
+        return res
 
 class Mcsrv():
     def __init__(self, platform):
