@@ -27,8 +27,8 @@ class Kaichu():
         self.Subreddit = Subreddit
         self.fetched = []
 
-    def parseGal(self, id):
-        post = reddit.submission(str(id))
+    async def parseGal(self, id):
+        post = await reddit.submission(str(id))
         gallery = []
         ids = [i['media_id'] for i in post.gallery_data['items']]
         for id in ids:
@@ -48,7 +48,7 @@ class Kaichu():
         if Type == "gallery":
             link = str(post.url).split("/")
             id = link[-1]
-            imgs = self.parseGal(id)
+            imgs = await self.parseGal(id)
             template["img_url"] = imgs
         return template
 
