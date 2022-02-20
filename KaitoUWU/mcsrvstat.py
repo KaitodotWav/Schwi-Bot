@@ -15,7 +15,10 @@ class AMCstat():
     async def Jping(self, ip, mode="json"):
         server = MCjava.lookup(ip)
         res = server.status()
-        return res
+        m = []
+        for i in res:
+            m.append(i)
+        return m
 
 class Mcsrv():
     def __init__(self, platform):
