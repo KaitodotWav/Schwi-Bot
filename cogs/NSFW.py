@@ -31,7 +31,8 @@ class Yabai(commands.Cog):
 
     @commands.command()
     async def openL(self, ctx, link):
-        pass
+        req = requests.get(link)
+        ctx.send(req.json)
 
     @commands.command()
     async def ncode(self, ctx, code, mode="view"):
