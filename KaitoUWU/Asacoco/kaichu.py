@@ -28,7 +28,10 @@ class Kaichu():
         self.fetched = []
 
     async def Build(self, post):
-        template = {"url":post.url, "title":post.title, "scores":post.score, "timestamp":post.created}
+        nsfw = False
+        if post.over_18:
+            nsfw = True
+        template = {"url":post.url, "title":post.title, "scores":post.score, "timestamp":post.created, "nsfw":nsfw}
         return template
 
     async def search(self, Syntax=None, Sort="hot", Time="month", o18=False):
