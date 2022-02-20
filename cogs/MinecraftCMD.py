@@ -8,6 +8,9 @@ from KaitoUWU import BotUtils
 linkIco = "https://api.mcsrvstat.us/icon/<address>"
 default_ico = "https://cdn.discordapp.com/attachments/889038336453394433/894638342979878972/worldICO.png"
 
+class SyntaxError(Exception):
+    pass
+
 #other functions
 def LtoS(List):
     build = ""
@@ -62,9 +65,13 @@ class Minecraft(commands.Cog):
                     await self.zoe.EditEMB(main_emb, emb)
             
             elif options[0] == "dump":
-                serv.dump("dumps\\{}.json".format(serv.result["hostname"]))
+                serv.dump("dumps_{}_{}.json".format(serv.result["ip"], serv.result["port"]))
                 await main_emb.delete()
-                await ctx.send(file=discord.File("dumps\\{}.json".format(serv.result["hostname"])))
+                await ctx.send(file=discord.File("dumps_{}_{}.json".format(serv.result["ip"], serv.result["port"])))
+
+            else:
+                raise SyntaxError("unknown command -> {}".format(options[0]))
+
         except Exception as e:
             emb = self.emb_err.get(Des="while executing the command.")
             emb.add_field(name=str(type(e)), value=e)

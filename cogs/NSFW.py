@@ -6,10 +6,13 @@ class Yabai(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    def buildEMB(sef, Dict):
+    def buildEMB(self, Dict):
         emb = discord.Embed(title=Dict["title"], description="Score:{}".format(Dict["scores"]))
         emb.set_image(url=Dict["url"])
         return emb
+
+    async def dm(user, item):
+        pass
 
     @commands.command()
     async def culture(self, ctx, Type, index="random", *Options):
@@ -25,6 +28,9 @@ class Yabai(commands.Cog):
             for i in items:
                 await ctx.send(embed=self.buildEMB(items[i]))
             
+    @commands.command()
+    async def ncode(self, ctx, code, mode="view"):
+        pass
         
 
 
