@@ -1,9 +1,30 @@
-import configparser, discord, random
+import configparser, discord, random, time
 
 def ini_get(ini):
     config = configparser.ConfigParser()
     config.read(ini)
     return config
+
+class Timer():
+    def __init__(self):
+        self.startT = None
+        self.endT = None
+    
+    def start(self):
+        self.startT = time.time()
+
+    def end(self):
+        self.endT = time.time()
+        ET = self.elapse()
+        self.reset()
+        return ET
+
+    def elapse(self):
+        elp = self.endT - self.startT
+        return elp
+    
+    def reset(self):
+        self.startT = self.endT = None
 
 class ERROR():
     class Embed_Error(Exception):
