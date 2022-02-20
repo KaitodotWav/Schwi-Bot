@@ -1,4 +1,4 @@
-import discord
+import discord, json, requests
 from discord.ext import commands, tasks
 from KaitoUWU.Asacoco.kaichu import Kaichu
 
@@ -28,7 +28,11 @@ class Yabai(commands.Cog):
             items = await subreddit.GetDict()
             for i in items:
                 await ctx.send(embed=self.buildEMB(items[i]))
-            
+
+    @commands.command()
+    async def openL(self, ctx, link):
+        pass
+
     @commands.command()
     async def ncode(self, ctx, code, mode="view"):
         pass
