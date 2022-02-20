@@ -4,3 +4,4 @@ requests
 praw
 asyncpraw
 psycopg2
+mcstatus
