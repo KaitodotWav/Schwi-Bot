@@ -31,7 +31,7 @@ class Minecraft(commands.Cog):
     @commands.command()
     async def ping2(self, ctx, ip=None, platform="java", *options):
         try:
-            serv = AMCstat()
+            serv = MCsrv.AMCstat()
             res = await serv.Jping(ip)
             await ctx.send(str(res))
         except Exception as e:
