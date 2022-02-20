@@ -70,7 +70,7 @@ class Minecraft(commands.Cog):
                 await ctx.send(file=discord.File("dumps_{}_{}.json".format(serv.result["ip"], serv.result["port"])))
 
             else:
-                raise SyntaxError("unknown command -> {}".format(options[0])
+                raise SyntaxError("unknown command -> {}".format(options[0]))
 
         except Exception as e:
             emb = self.emb_err.get(Des="while executing the command.")
