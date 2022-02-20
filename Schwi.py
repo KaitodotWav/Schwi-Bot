@@ -2,9 +2,13 @@
 
 #imports
 import discord, time, sys, configparser, requests, json, os
+from KaitoUWU import BotUtils
+
+stime = BotUtils.Timer()
+stime.start()
+
 from discord.ext import commands
 from KaitoUWU import CMD
-from KaitoUWU import BotUtils
 
 config = configparser.ConfigParser()
 config.read("Properties.ini")
@@ -80,7 +84,9 @@ async def on_ready():
             emb = BotUtils.EMBEDS(Type="error", title="Error!", description="while starting the bot.")
             sendE = emb.get()
             sendE.add_field(name=str(i[0]), value=str(i[1]))
-            await report.send(embed=sendE)
+            await report.send(embed=send)
+        btime = stime.end()
+        on_emb.add_field(name="elapse bot start", value=btime)
         print(f"{client.user} is now online on host:{host}")
         await report.send(embed=on_emb)
 
