@@ -28,6 +28,7 @@ class Yabai(commands.Cog):
             items = await subreddit.GetDict()
             for i in items:
                 await ctx.send(embed=self.buildEMB(items[i]))
+            await ctx.send(str(items))
 
     @commands.command()
     async def openL(self, ctx, link):
