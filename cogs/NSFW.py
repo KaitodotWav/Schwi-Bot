@@ -34,7 +34,7 @@ class Yabai(commands.Cog):
         try:
             req = requests.get(link)
             temp = json.load(req.json)
-            await ctx.send(temp.read())
+            await ctx.send(temp)
         except Exception as e:
             await ctx.send(f"Error {e}")
 
