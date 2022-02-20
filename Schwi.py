@@ -86,7 +86,7 @@ async def on_ready():
             sendE.add_field(name=str(i[0]), value=str(i[1]))
             await report.send(embed=send)
         btime = stime.end()
-        on_emb.add_field(name="elapse bot start", value=btime)
+        on_emb.add_field(name="elapse bot start", value="{} sec/s".format(round(btime,2)))
         print(f"{client.user} is now online on host:{host}")
         await report.send(embed=on_emb)
 
