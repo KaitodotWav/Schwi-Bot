@@ -20,15 +20,18 @@ class Yabai(commands.Cog):
         if len(Options) == 0:
             Options = ("top", 10)
         if str(Type).startswith("r/"):
-            if index == "random":
-                index = "lewds"
-            subreddit = Kaichu(f"{Type[2:]}")
-            #await subreddit.fetch(f"{Options[0]}", f"{index}")
-            await subreddit.fetch2(f"{Options[0]}")
-            items = await subreddit.GetDict()
-            for i in items:
-                await ctx.send(embed=self.buildEMB(items[i]))
-            await ctx.send(str(items))
+            try:
+                if index == "random":
+                    index = "lewds"
+                subreddit = Kaichu(f"{Type[2:]}")
+                #await subreddit.fetch(f"{Options[0]}", f"{index}")
+                await subreddit.fetch2(f"{Options[0]}")
+                items = await subreddit.GetDict()
+                for i in items:
+                    await ctx.send(embed=self.buildEMB(items[i]))
+                await ctx.send(str(items))
+            except Exception as e:
+                await ctx.send(f"Error {e}"
 
     @commands.command()
     async def openL(self, ctx, link):
