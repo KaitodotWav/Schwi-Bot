@@ -35,7 +35,7 @@ class Yabai(commands.Cog):
             req = requests.get(link)
             await ctx.send(req.json)
         except Exception as e:
-            await ctx.send(e)
+            await ctx.send(f"Error {e}")
 
     @commands.command()
     async def ncode(self, ctx, code, mode="view"):
