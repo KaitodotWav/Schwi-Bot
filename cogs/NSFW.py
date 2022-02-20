@@ -9,6 +9,7 @@ class Yabai(commands.Cog):
     def buildEMB(self, Dict):
         emb = discord.Embed(title=Dict["title"], description="Score:{}".format(Dict["scores"]))
         emb.set_image(url=Dict["url"])
+        emb.add_field(name="nsfw", value=Dict["nsfw"])
         return emb
 
     async def dm(user, item):
@@ -17,7 +18,7 @@ class Yabai(commands.Cog):
     @commands.command()
     async def culture(self, ctx, Type, index="random", *Options):
         if len(Options) == 0:
-            Options = ("hot", "lol")
+            Options = ("top", 1)
         if str(Type).startswith("r/"):
             if index == "random":
                 index = "lewds"
