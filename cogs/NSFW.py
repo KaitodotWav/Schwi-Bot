@@ -31,7 +31,7 @@ class Yabai(commands.Cog):
                     await ctx.send(embed=self.buildEMB(items[i]))
                 await ctx.send(str(items))
             except Exception as e:
-                await ctx.send(f"Error {e}"
+                await ctx.send(f"Error {e}")
 
     @commands.command()
     async def openL(self, ctx, link):
