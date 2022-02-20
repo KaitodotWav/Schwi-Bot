@@ -33,7 +33,7 @@ class Yabai(commands.Cog):
     async def openL(self, ctx, link):
         try:
             req = requests.get(link)
-            temp = json.load(req.json)
+            temp = json.loads(req.json)
             await ctx.send(temp)
         except Exception as e:
             await ctx.send(f"Error {e}")
