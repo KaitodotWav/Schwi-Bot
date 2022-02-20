@@ -40,7 +40,6 @@ class Kaichu():
     async def Build(self, post):
         nsfw = False
         Type = "post"
-        img_url = None
         if post.over_18:
             nsfw = True
         if "gallery" in str(post.url).lower():
@@ -50,7 +49,7 @@ class Kaichu():
             link = str(post.url).split("/")
             id = link[-1]
             imgs = self.parseGal(id)
-            template["imgs_url"] = imgs
+            template["img_url"] = imgs
         return template
 
     async def search(self, Syntax=None, Sort="hot", Time="month", o18=False):
