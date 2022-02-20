@@ -27,11 +27,30 @@ class Kaichu():
         self.Subreddit = Subreddit
         self.fetched = []
 
+    def parseGal(self, id):
+        post = reddit.submission(str(id))
+        gallery = []
+        ids = [i['media_id'] for i in post.gallery_data['items']]
+        for id in ids:
+            url = post.media_metadata[id]['p'][0]['u']
+            url = url.split("?")[0].replace("preview", "i")
+            gallery.append(url)
+        return gallery
+
     async def Build(self, post):
         nsfw = False
+        Type = "post"
+        img_url = None
         if post.over_18:
             nsfw = True
-        template = {"url":post.url, "title":post.title, "scores":post.score, "timestamp":post.created, "nsfw":nsfw}
+        if "gallery" in str(post.url).lower():
+            Type = "gallery"
+        template = {"type":Type, "url":post.url, "title":post.title, "scores":post.score, "timestamp":post.created, "nsfw":nsfw}
+        if Type == "gallery":
+            link = str(post.url).split("/")
+            id = link[-1]
+            imgs = self.parseGal(id)
+            template["imgs_url"] = imgs
         return template
 
     async def search(self, Syntax=None, Sort="hot", Time="month", o18=False):
