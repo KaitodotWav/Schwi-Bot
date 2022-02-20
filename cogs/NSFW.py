@@ -31,8 +31,11 @@ class Yabai(commands.Cog):
 
     @commands.command()
     async def openL(self, ctx, link):
-        req = requests.get(link)
-        ctx.send(req.json)
+        try:
+            req = requests.get(link)
+            await ctx.send(req.json)
+        except Exception as e:
+            await ctx.send(e)
 
     @commands.command()
     async def ncode(self, ctx, code, mode="view"):
