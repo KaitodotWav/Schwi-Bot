@@ -27,7 +27,6 @@ class BotLogger(commands.Cog):
                 self.firstrun = False
             else:
                 cache = [line.strip('') for line in open("Data\\logs.txt")]
-                await self.Sender(self.endline)
                 if len(cache) != self.endline:
                     send = cache[self.endline-1:]
                     for i in send:
