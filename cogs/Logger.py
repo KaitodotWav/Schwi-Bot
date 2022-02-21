@@ -14,6 +14,7 @@ class BotLogger(commands.Cog):
         self.emb = BotUtils.EMBEDS()
         self.send = BotUtils.SENDER(self.client)
         self.endline = 0
+        self.firstrun = True
         self.Scan.start()
 
     async def Sender(self, msg):
@@ -22,13 +23,16 @@ class BotLogger(commands.Cog):
     @tasks.loop(seconds=10)
     async def Scan(self):
         try:
-            cache = [line.strip('') for line in open("Data\\logs.txt")]
-            await self.Sender(self.endline)
-            if len(cache) != self.endline:
-                send = cache[self.endline-1:]
-                for i in send:
-                    await self.Sender(i)
-                self.endline = len(cache)
+            if self.firstrun:
+                self.firstrun = False
+            else:
+                cache = [line.strip('') for line in open("Data\\logs.txt")]
+                await self.Sender(self.endline)
+                if len(cache) != self.endline:
+                    send = cache[self.endline-1:]
+                    for i in send:
+                        await self.Sender(i)
+                    self.endline = len(cache)
         except Exception as e:
             emb_err = self.emb.get(Type='error', Title=str(type(e)), Des=str(e))
             await self.send.ReportEMB(self.report, emb_err)
