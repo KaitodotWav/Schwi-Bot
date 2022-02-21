@@ -9,6 +9,7 @@ class BotLogger(commands.Cog):
     def __init__(self, client):
         self.client = client
         self.endline = 0
+        self.Sender("Bot logger is now connected!")
         self.Scan.start()
 
     @tasks.loop(seconds=10)
