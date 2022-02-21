@@ -1,9 +1,7 @@
 #Schwi bot created by Kaito
 
 #imports
-import discord, time, sys, configparser, requests, json, os
-with open("Data\\logs.txt", "a") as log:
-    print("bot logger is connected", file=log)
+import discord, time, sys, configparser, requests, json, os 
 
 class Tee:
     def write(self, *args, **kwargs):
@@ -13,7 +11,9 @@ class Tee:
         self.out1 = out1
         self.out2 = out2
 
-sys.stdout = Tee(open("Data/logs.txt", "a"), sys.stdout)
+with open("Data\\logs.txt", "a") as log:
+    print("bot logger is connected", file=log)
+    sys.stdout = Tee(log, sys.stdout)
 
 print("hello")
 
