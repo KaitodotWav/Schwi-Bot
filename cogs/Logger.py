@@ -17,7 +17,7 @@ class BotLogger(commands.Cog):
         self.Scan.start()
 
     async def Sender(self, msg):
-        await self.send.Report(self.logCH, msg)
+        await self.send.Report(self.logCH, str(msg))
 
     @tasks.loop(seconds=10)
     async def Scan(self):
