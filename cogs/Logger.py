@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands, tasks
 import time, configparser
 
-config = configparser.ConfigParse()
+config = configparser.ConfigParser()
 config.read("Properties.ini")
 
 class BotLogger(commands.Cog):
