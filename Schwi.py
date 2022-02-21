@@ -2,6 +2,9 @@
 
 #imports
 import discord, time, sys, configparser, requests, json, os
+log = open("Data\\logs.txt", "a")
+sys.stdout = log
+
 from KaitoUWU import BotUtils
 
 stime = BotUtils.Timer()
