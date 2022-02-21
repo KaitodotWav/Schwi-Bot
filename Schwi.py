@@ -3,7 +3,7 @@
 #imports
 import discord, time, sys, configparser, requests, json, os
 with open("Data\\logs.txt", "a") as log:
-    sys.stdout = log
+    print("bot logger test", file=log)
 
 from KaitoUWU import BotUtils
 
