@@ -2,8 +2,8 @@
 
 #imports
 import discord, time, sys, configparser, requests, json, os
-log = open("Data\\logs.txt", "a")
-sys.stdout = log
+with open("Data\\logs.txt", "a") as log:
+    sys.stdout = log
 
 from KaitoUWU import BotUtils
 
