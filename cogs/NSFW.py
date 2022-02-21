@@ -7,7 +7,7 @@ class Yabai(commands.Cog):
     def __init__(self, client):
         self.client = client
         self.main_emb = BotUtils.EMBEDS(Type="loading", title="Processing", description="please wait...")
-        self.send = BotUtils.SENDER()
+        self.send = BotUtils.SENDER(self.client)
 
     def buildEMB(self, Dict):
         emb = discord.Embed(title=Dict["title"], description="Score:{}".format(Dict["scores"]))
