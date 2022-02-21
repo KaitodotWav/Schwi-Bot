@@ -16,6 +16,7 @@ class BotLogger(commands.Cog):
     @tasks.loop(seconds=10)
     async def Scan(self):
         cache = [line.strip('') for line in open("Data\\logs.txt")]
+        await self.Seder(cache)
         if len(cache) != self.endline:
             send = cache[self.endline-1:]
             for i in send:
