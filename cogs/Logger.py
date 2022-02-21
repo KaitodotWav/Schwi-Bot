@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands, tasks
 import time, configparser
+from KaitoUWU import BotUtils
 
 config = configparser.ConfigParser()
 config.read("Properties.ini")
@@ -9,7 +10,7 @@ class BotLogger(commands.Cog):
     def __init__(self, client):
         self.client = client
         self.endline = 0
-        self.Sender("Bot logger is now connected!")
+        self.send = BotUtils.SENDER(self.client)
         self.Scan.start()
 
     @tasks.loop(seconds=10)
@@ -22,8 +23,8 @@ class BotLogger(commands.Cog):
             self.endline = len(cache)
 
     async def Sender(self, msg):
-        logCH = await self.client.get_channel(int(config["Notifs"]["Logs"]))
-        await logCH.send(str(msg))
+        logCH = config['Notifs']['Logs']
+        await self.send.Report(int(logCH), msg)
 
 def setup(client):
     client.add_cog(BotLogger(client))
