@@ -5,4 +5,4 @@ praw
 asyncpraw
 psycopg2
 mcstatus
-discord_components
+discord-components
