@@ -29,6 +29,15 @@ class Minecraft(commands.Cog):
         self.emb_fail = BotUtils.EMBEDS(Type="fail", title="Failed!", color=0xFFA500)
 
     @commands.command()
+    async def ping2(self, ctx, ip=None, platform="java", *options):
+        try:
+            serv = MCsrv.AMCstat()
+            res = await serv.Jping(ip)
+            await ctx.send(str(res))
+        except Exception as e:
+            await ctx.send(f"Error {e}")
+
+    @commands.command()
     async def ping(self, ctx, ip=None, platform="java", *options):
         try:
             mainemb = self.main_emb.get()

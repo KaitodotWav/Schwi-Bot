@@ -1,9 +1,31 @@
-import configparser, discord, random
+import configparser, discord, random, time
+#import discord_components
 
 def ini_get(ini):
     config = configparser.ConfigParser()
     config.read(ini)
     return config
+
+class Timer():
+    def __init__(self):
+        self.startT = None
+        self.endT = None
+    
+    def start(self):
+        self.startT = time.time()
+
+    def end(self):
+        self.endT = time.time()
+        ET = self.elapse()
+        self.reset()
+        return ET
+
+    def elapse(self):
+        elp = self.endT - self.startT
+        return elp
+    
+    def reset(self):
+        self.startT = self.endT = None
 
 class ERROR():
     class Embed_Error(Exception):
@@ -95,10 +117,12 @@ class SENDER():
         except Exception as e:
             raise ERROR.Send_Error(e)
         
-    async def ReportEMB(self, ID, EMB):
+    async def ReportEMB(self, ID, EMB, publish=False):
         report = self.client.get_channel(ID)
         try:
             send = await report.send(embed=EMB)
+            if publish:
+                await send.publish()
             return send
         except Exception as e:
             raise ERROR.Send_Error(e)
@@ -110,10 +134,12 @@ class SENDER():
         except Exception as e:
             raise ERROR.Send_Error(e)
 
-    async def ReportFile(self, ID, path):
+    async def ReportFile(self, ID, path, publish=False):
         report = self.client.get_channel(ID)
         try:
             send = await report.send(file=discord.File(f"{path}"))
+            if publish:
+                send.publish()
             return send
         except Exception as e:
             raise ERROR.Send_Error(e)

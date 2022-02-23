@@ -2,9 +2,17 @@
 
 #imports
 import discord, time, sys, configparser, requests, json, os
+
+with open("Data\\logs.txt", "a") as log:
+    print("bot logger is connected", file=log)
+
+from KaitoUWU import BotUtils
+
+stime = BotUtils.Timer()
+stime.start()
+
 from discord.ext import commands
 from KaitoUWU import CMD
-from KaitoUWU import BotUtils
 
 config = configparser.ConfigParser()
 config.read("Properties.ini")
@@ -64,7 +72,8 @@ async def unload(ctx, extension):
     
 @client.event
 async def on_ready():
-    report = client.get_channel(int(config["Notifs"]["Reports"]))
+    report = int(config["Notifs"]["Reports"])
+    zoe = BotUtils.SENDER(client)
     
     try:
         import socket
@@ -80,9 +89,11 @@ async def on_ready():
             emb = BotUtils.EMBEDS(Type="error", title="Error!", description="while starting the bot.")
             sendE = emb.get()
             sendE.add_field(name=str(i[0]), value=str(i[1]))
-            await report.send(embed=sendE)
+            await zoe.ReportEMB(report, sendE)
+        btime = stime.end()
+        on_emb.add_field(name="elapse bot start", value="{} sec/s".format(round(btime,2)))
         print(f"{client.user} is now online on host:{host}")
-        await report.send(embed=on_emb)
+        await zoe.ReportEMB(report, on_emb, True)
 
 #run
 for filename in os.listdir("./cogs"):
