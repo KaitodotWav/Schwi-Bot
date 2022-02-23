@@ -39,15 +39,21 @@ still not done but already functional
 
 a faster, less buggy and improved discord bot
 
+-- Slow coding process --
+
+unfortunately my laptop broke
+so im just using my phone to code the bot
+im so limited on what things i can do
+i cannot debug the bot easily
+making the coding process really slow
+
 -------------------------------------------------------
 Branches:
-My laptop is broken due to this reason i cannot delete unused branches
-on my repo so i have alot of them
-PAIN
-ill delete them if i can for now just deal with them
 
---Main = main release and being used by the Schwi bot
+--Main = Main release and being used by the Schwi bot
 
---Pub = beta release and being used by Poyoyo bot
+--Beta = Experimental release and being used by Poyoyo bot
+
+
 
 
