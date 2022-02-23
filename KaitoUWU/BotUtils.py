@@ -106,10 +106,12 @@ class SENDER():
     def __init__(self, client):
         self.client = client
         
-    async def Report(self, ID, content):
+    async def Report(self, ID, content, publish=False):
         report = self.client.get_channel(ID)
         try:
             send = await report.send(content)
+            if publish:
+                await send.publish()
             return send
         except Exception as e:
             raise ERROR.Send_Error(e)
