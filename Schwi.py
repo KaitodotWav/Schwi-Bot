@@ -72,13 +72,12 @@ async def unload(ctx, extension):
     
 @client.event
 async def on_ready():
-    report = client.get_channel(int(config["Notifs"]["Reports"]))
+    report = int(config["Notifs"]["Reports"])
+    zoe = BotUtils.SENDER(client)
     
     try:
         import socket
         host = socket.gethostname()
-        zoe = BotUtils.SENDER(client)
-        await zoe.Report(int(config['Notifs']['Reports']), "test brodcast", True)
     except Exception as e:
         print(e)
         errors.append((type(e), e))
@@ -90,11 +89,11 @@ async def on_ready():
             emb = BotUtils.EMBEDS(Type="error", title="Error!", description="while starting the bot.")
             sendE = emb.get()
             sendE.add_field(name=str(i[0]), value=str(i[1]))
-            await report.send(embed=sendE)
+            await zoe.ReportEMB(report, sendE)
         btime = stime.end()
         on_emb.add_field(name="elapse bot start", value="{} sec/s".format(round(btime,2)))
         print(f"{client.user} is now online on host:{host}")
-        await report.send(embed=on_emb)
+        await zoe.ReportEMB(report, on_emb, True)
 
 #run
 for filename in os.listdir("./cogs"):
