@@ -45,7 +45,6 @@ else:
 
 #Commands
 CMD.Process(client)
-zoe = BotUtils.SENDER()
 
 @client.command()
 async def reload(ctx, extension):
@@ -78,6 +77,8 @@ async def on_ready():
     try:
         import socket
         host = socket.gethostname()
+        zoe = BotUtils.SENDER(client)
+        await zoe.Report(int(config['Notifs']['Reports']), "test brodcast", True)
     except Exception as e:
         print(e)
         errors.append((type(e), e))
@@ -94,7 +95,6 @@ async def on_ready():
         on_emb.add_field(name="elapse bot start", value="{} sec/s".format(round(btime,2)))
         print(f"{client.user} is now online on host:{host}")
         await report.send(embed=on_emb)
-        await zoe.Report(int(config["Notifs"]["Reports"], "test brodcast", True))
 
 #run
 for filename in os.listdir("./cogs"):
