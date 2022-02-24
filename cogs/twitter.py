@@ -29,7 +29,7 @@ class Twitter(commands.Cog):
             await ctx.send(str(type(item)))
             
         except Exception as e:
-            await ctx.send(f"Error! {e})
+            await ctx.send(f"Error! {e}")
 
 def setup(client):
     client.add_cog(Twitter(client, client2))
