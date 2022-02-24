@@ -24,7 +24,7 @@ class Twitter(commands.Cog):
     @commands.command()
     async def debug(self, ctx):
         try:
-            await ctx.send(self.me.Response.data)
+            await ctx.send(self.me.data, type(self.me.data))
         except Exception as e:
             await ctx.send(e)
 
