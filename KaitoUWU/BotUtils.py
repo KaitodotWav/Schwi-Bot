@@ -1,10 +1,36 @@
-import configparser, discord, random, time
+import configparser, discord, random, time, json
 #import discord_components
 
 def ini_get(ini):
     config = configparser.ConfigParser()
     config.read(ini)
     return config
+
+class FileHandler():
+    class ParseError(Exception):
+        pass
+    class SaveError(Exception):
+        pass
+
+    class JSON():
+        def __init__(self, path, encoding='utf8'):
+            self.path = str(path)
+            self.enc = str(encoding)
+
+        def Load(self):
+            try:
+                with open(self.path, 'r', encoding=self.enc) as f:
+                    cache = json.loads(f.read())
+                return cache
+            except Exception as e:
+                raise ParseError(e)
+
+        def Save(self, items, Indent=4):
+            try:
+                with open(self.path, 'w', encoding=self.enc) as f:
+                    json.dump(items, f, ensure_ascii=False, indent=Indent)
+            except Exception as e:
+                raise SaveError(e)
 
 class Timer():
     def __init__(self):
