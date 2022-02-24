@@ -5,3 +5,4 @@ praw
 asyncpraw
 psycopg2
 mcstatus
+tweepy
