@@ -21,7 +21,7 @@ class Twitter():
         self.birb = birb
         self.me = self.birb.get_me()
 
-        await self.zoe.Report(int(notify['Reports']), dir(self.me)
+        await self.zoe.Report(int(notify['Reports']), dir(self.me))
 
 def setup(client):
     client.add_cog(Twitter(client, client2))
