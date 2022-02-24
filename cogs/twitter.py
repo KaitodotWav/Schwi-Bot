@@ -24,9 +24,12 @@ class Twitter(commands.Cog):
     @commands.command()
     async def debug(self, ctx):
         try:
-            await ctx.send(self.me.data, type(self.me.data))
+            item = self.me.data
+            await ctx.send(str(item))
+            await ctx send(str(type(item)))
+            
         except Exception as e:
-            await ctx.send(e)
+            await ctx.send(f"Error! {e})
 
 def setup(client):
     client.add_cog(Twitter(client, client2))
