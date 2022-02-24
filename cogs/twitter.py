@@ -26,7 +26,7 @@ class Twitter(commands.Cog):
         try:
             item = self.me.data
             await ctx.send(str(item))
-            await ctx send(str(type(item)))
+            await ctx.send(str(type(item)))
             
         except Exception as e:
             await ctx.send(f"Error! {e})
