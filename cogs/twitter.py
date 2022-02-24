@@ -13,7 +13,7 @@ client2 = tweepy.Client(
     access_token_secret=str(tweetC['secret'])
 )
 
-class Twitter():
+class Twitter(commands.Cog):
     def __init__(self, client, birb):
         self.client = client
         self.zoe = BotUtils.SENDER(self.client)
