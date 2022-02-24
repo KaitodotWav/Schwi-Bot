@@ -23,8 +23,7 @@ class Twitter(commands.Cog):
 
     @commands.command()
     async def debug(self, ctx):
-        for i in self.me:
-            await ctx.send(str(i + self.me[i]))
+        await self.me
 
 def setup(client):
     client.add_cog(Twitter(client, client2))
