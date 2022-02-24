@@ -21,10 +21,13 @@ class Twitter(commands.Cog):
         self.birb = birb
         self.me = self.birb.get_me()
 
+
     @commands.command()
-    async def debug(self, ctx):
+    async def debug(self, ctx, args):
         try:
-            item = self.me.data
+            user = self.birb.get_user(username=str(args))
+
+            item = user
             await ctx.send(str(item))
             await ctx.send(str(type(item)))
             
