@@ -23,7 +23,10 @@ class Twitter(commands.Cog):
 
     @commands.command()
     async def debug(self, ctx):
-        await self.me
+        try:
+            await ctx.send(self.me)
+        except Exception as e:
+            await ctx.send(e)
 
 def setup(client):
     client.add_cog(Twitter(client, client2))
