@@ -7,6 +7,7 @@ tweetC = properties['twitter']
 notify = properties['Notifs']
 
 client2 = tweepy.Client(
+    bearer_token=str(tweetC['bearer']),
     consumer_key=str(tweetC['con_key']),
     consumer_secret=str(tweetC['con_secret']),
     access_token=str(tweetC['token']),
