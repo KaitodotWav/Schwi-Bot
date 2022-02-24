@@ -6,7 +6,7 @@ properties = BotUtils.ini_get('Properties.ini')
 tweetC = properties['twitter']
 notify = properties['Notifs']
 
-client = tweepy.Client(
+client2 = tweepy.Client(
     consumer_key=str(tweetC['con_key']),
     consumer_secret=str(tweetC['con_secret']),
     access_token=str(tweetC['token']),
