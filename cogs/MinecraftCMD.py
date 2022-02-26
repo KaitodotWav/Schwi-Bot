@@ -73,6 +73,21 @@ class Minecraft(commands.Cog):
                     emb.add_field(name="no connection.", value="server is offline or cant be found.", inline=False)
                     await self.zoe.EditEMB(main_emb, emb)
             
+
+            elif options[0] == "json":
+                build = None
+                opt = str(options[1])
+                if opt == None:
+                    build = serv
+                else:
+                    try:
+                        build = serv[opt]
+                    except:
+                        raise SyntaxError(f"unknown key -> {opt}")
+
+                create = json.dumps(build, ensure_ascii=False, indent=4)
+                await ctx.send(create)
+
             elif options[0] == "dump":
                 serv.dump("dumps_{}_{}.json".format(serv.result["ip"], serv.result["port"]))
                 await main_emb.delete()
