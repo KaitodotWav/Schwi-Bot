@@ -85,8 +85,9 @@ class Minecraft(commands.Cog):
                     except:
                         raise SyntaxError(f"unknown key -> {opt}")
 
+                await ctx.send(str(build))
                 create = json.dumps(build, ensure_ascii=False, indent=4)
-                await ctx.send(create)
+                await ctx.send(str(create))
 
             elif options[0] == "dump":
                 serv.dump("dumps_{}_{}.json".format(serv.result["ip"], serv.result["port"]))
