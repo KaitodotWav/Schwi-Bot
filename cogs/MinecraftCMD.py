@@ -46,7 +46,7 @@ class Minecraft(commands.Cog):
             self.lastcall[f"{ctx.channel.id}"] = serv
             serv.ping(f"{ip}")
             if len(options) == 0:
-                options = ("open", None)
+                options = ("open", "idk")
             if options[0] == "open":
                 print("called")
                 if serv.result["online"] == True:
@@ -77,7 +77,7 @@ class Minecraft(commands.Cog):
             elif options[0] == "json":
                 build = None
                 opt = str(options[1])
-                if opt == None:
+                if opt == "idk":
                     build = serv
                 else:
                     try:
