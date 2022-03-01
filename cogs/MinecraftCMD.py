@@ -38,13 +38,15 @@ class Minecraft(commands.Cog):
             await ctx.send(f"Error {e}")
 
     @commands.command()
-    async def ping(self, ctx, ip=None, platform="java", *options=("open")):
+    async def ping(self, ctx, ip=None, platform="java", *options):
         try:
             mainemb = self.main_emb.get()
             main_emb = await self.zoe.ReportEMB(ctx.channel.id, mainemb)
             serv = MCsrv.Mcsrv(platform)
             self.lastcall[f"{ctx.channel.id}"] = serv
             serv.ping(f"{ip}")
+            if len(options) <= 0:
+                options = ("open")
             if options[0] == "open":
                 print("called")
                 if serv.result["online"] == True:
