@@ -3,14 +3,18 @@ import discord, tweepy
 from discord.ext import commands, tasks
 
 properties = BotUtils.ini_get('Properties.ini')
-tweetC = properties['twitter']
+#tweetC = properties['twitter']
 notify = properties['Notifs']
+
+AuthCon = BotUtils.FileHandle.JSON("Data/TwitterAuth.json")
+cache = AuthCon.load()
+tweetC = cache["kai2ymd"]
 
 akey = str(tweetC['token'])
 asecret = str(tweetC['secret'])
 ckey = str(tweetC['con_key'])
 csecret = str(tweetC['con_secret'])
-#bearer = str(tweetC['bearer'])
+bearer = str(tweetC['bearer'])
 
 auth = tweepy.OAuthHandler(ckey, csecret)
 auth.set_access_token(akey, asecret)
