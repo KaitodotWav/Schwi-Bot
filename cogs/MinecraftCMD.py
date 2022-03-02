@@ -46,9 +46,11 @@ class Minecraft(commands.Cog):
             self.lastcall[f"{ctx.channel.id}"] = serv
             serv.ping(f"{ip}")
             if len(options) <= 0:
-                options = ("open", "idk")
+                options = ["open"]
+            else:
+                options = list(options)
+                add_opt = True
             if options[0] == "open":
-                print("called")
                 if serv.result["online"] == True:
                     try:
                         emb = discord.Embed(title=serv.result["hostname"], description="status: Online")
@@ -76,8 +78,11 @@ class Minecraft(commands.Cog):
 
             elif options[0] == "json":
                 build = None
-                if opt == "idk":
+                if add_opt:
+                    options.append(None)
+                if options[1] == None:
                     build = serv
+                if options[1] == "
                 else:
                     try:
                         build = serv[opt]
