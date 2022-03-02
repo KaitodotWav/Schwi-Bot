@@ -87,7 +87,11 @@ class Minecraft(commands.Cog):
                     #build = serv.result
                     build = "all"
                 elif str(opt[1]) == "list":
-                    await ctx.send(serv.result.keys())
+                    gkeys = serv.result.keys()
+                    strlist = ""
+                    for i in gkeys:
+                        strlist += f" {i},"
+                    await ctx.send("Keys:\n{}".format(strlist[:-1]))
                 else:
                     try:
                         #build = serv.result[opt[1]]
@@ -95,6 +99,7 @@ class Minecraft(commands.Cog):
                     except:
                         raise SyntaxError(f"unknown key -> {opt}")
 
+                await.main_emb.delete()
                 await ctx.send(str(build))
                 #create = json.dumps(build, ensure_ascii=False, indent=4)
                 #await ctx.send(str(create))
