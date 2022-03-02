@@ -18,16 +18,15 @@ bearer = str(tweetC['bearer'])
 """
 auth = tweepy.OAuthHandler(ckey, csecret)
 auth.set_access_token(akey, asecret)
+client2 = tweepy.API(auth)
 """
-clientA = tweepy.Client(
+client2 = tweepy.Client(
     bearer_token=bearer,
     consumer_key=ckey,
     consumer_secret=csecret,
     access_token=akey,
     access_token_secret=asecret
 )
-
-client2 = tweepy.API(auth)
 
 class Twitter(commands.Cog):
     def __init__(self, client, birb):
