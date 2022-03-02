@@ -45,11 +45,12 @@ class Minecraft(commands.Cog):
             serv = MCsrv.Mcsrv(platform)
             self.lastcall[f"{ctx.channel.id}"] = serv
             serv.ping(f"{ip}")
+            options = list(options)
             if len(options) <= 0:
                 options = ["open"]
-            else:
-                options = list(options)
+            elif len(options) == 1:
                 add_opt = True
+
             if options[0] == "open":
                 if serv.result["online"] == True:
                     try:
@@ -81,10 +82,10 @@ class Minecraft(commands.Cog):
                 opt = options
                 if add_opt:
                     opt.append("all")
-                if opt[1] == "all":
+                if str(opt[1]) == "all":
                     build = serv.result
-                if opt[1] == "list":
-                    contents = serv.values()
+                if str(opt[1]) == "list":
+                    contents = serv.result.values()
                     build = list(contents)
                 else:
                     try:
