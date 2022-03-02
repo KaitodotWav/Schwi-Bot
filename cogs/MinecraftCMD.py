@@ -46,6 +46,7 @@ class Minecraft(commands.Cog):
             self.lastcall[f"{ctx.channel.id}"] = serv
             serv.ping(f"{ip}")
             options = list(options)
+            add_opt = False
             if len(options) <= 0:
                 options = ["open"]
             elif len(options) == 1:
