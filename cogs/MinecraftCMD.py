@@ -87,9 +87,7 @@ class Minecraft(commands.Cog):
                     #build = serv.result
                     build = "all"
                 elif str(opt[1]) == "list":
-                    #contents = serv.result.values()
-                    #build = list(contents)
-                    build = "list"
+                    await ctx.send(serv.result.keys())
                 else:
                     try:
                         #build = serv.result[opt[1]]
