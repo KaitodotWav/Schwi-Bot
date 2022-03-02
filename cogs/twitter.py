@@ -6,7 +6,7 @@ properties = BotUtils.ini_get('Properties.ini')
 #tweetC = properties['twitter']
 notify = properties['Notifs']
 
-AuthCon = BotUtils.FileHandle.JSON("Data/TwitterAuth.json")
+AuthCon = BotUtils.FileHandler.JSON("Data/TwitterAuth.json")
 cache = AuthCon.load()
 tweetC = cache["kai2ymd"]
 
