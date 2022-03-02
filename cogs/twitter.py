@@ -43,7 +43,7 @@ class Twitter(commands.Cog):
             user = self.birb.get_user(username=str(args))
             item = user
             await ctx.send(str(type(item)))
-            await ctx.send(str(dir(item)))
+            await ctx.send(str(item))
 
             
         except Exception as e:
