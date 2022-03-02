@@ -3,7 +3,6 @@ import discord, tweepy
 from discord.ext import commands, tasks
 
 properties = BotUtils.ini_get('Properties.ini')
-#tweetC = properties['twitter']
 notify = properties['Notifs']
 
 AuthCon = BotUtils.FileHandler.JSON("Data/TwitterAuth.json")
@@ -15,11 +14,7 @@ asecret = str(tweetC['secret'])
 ckey = str(tweetC['con_key'])
 csecret = str(tweetC['con_secret'])
 bearer = str(tweetC['bearer'])
-"""
-auth = tweepy.OAuthHandler(ckey, csecret)
-auth.set_access_token(akey, asecret)
-client2 = tweepy.API(auth)
-"""
+
 client2 = tweepy.Client(
     bearer_token=bearer,
     consumer_key=ckey,
@@ -35,13 +30,15 @@ class Twitter(commands.Cog):
         self.birb = birb
         self.watashi = self.birb.get_me()
 
+    @commands.command()
+    async def gettweets(self, ctx, user):
+        pass
 
     @commands.command()
     async def debug(self, ctx, args):
         try:
-            #user = self.birb.get_user(screen_name=str(args))
             user = self.birb.get_user(username=str(args))
-            item = user
+            item = user.data
             await ctx.send(str(type(item)))
             await ctx.send(str(item))
 
