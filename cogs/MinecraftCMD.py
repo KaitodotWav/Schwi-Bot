@@ -99,7 +99,7 @@ class Minecraft(commands.Cog):
                     except:
                         raise SyntaxError(f"unknown key -> {opt}")
 
-                await.main_emb.delete()
+                await main_emb.delete()
                 await ctx.send(str(build))
                 #create = json.dumps(build, ensure_ascii=False, indent=4)
                 #await ctx.send(str(create))
