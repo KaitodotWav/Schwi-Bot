@@ -82,7 +82,9 @@ class Minecraft(commands.Cog):
                     options.append(None)
                 if options[1] == None:
                     build = serv
-                if options[1] == "
+                if options[1] == "list":
+                    contents = serv.values()
+                    build = list(contents)
                 else:
                     try:
                         build = serv[opt]
