@@ -79,15 +79,15 @@ class Minecraft(commands.Cog):
             elif options[0] == "json":
                 build = None
                 if add_opt:
-                    options.append(None)
-                if options[1] == None:
-                    build = serv
+                    options.append("all")
+                if options[1] == all:
+                    build = serv.result
                 if options[1] == "list":
                     contents = serv.values()
                     build = list(contents)
                 else:
                     try:
-                        build = serv[opt]
+                        build = serv.result[options[1]]
                     except:
                         raise SyntaxError(f"unknown key -> {opt}")
 
