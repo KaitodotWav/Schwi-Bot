@@ -94,15 +94,15 @@ class Minecraft(commands.Cog):
                     await ctx.send("Keys:\n{}".format(strlist[:-1]))
                 else:
                     try:
-                        #build = serv.result[opt[1]]
-                        build = "normal"
+                        build = serv.result[str(opt[1])]
                     except:
                         raise SyntaxError(f"unknown key -> {opt}")
 
                 await main_emb.delete()
-                await ctx.send(str(build))
-                #create = json.dumps(build, ensure_ascii=False, indent=4)
-                #await ctx.send(str(create))
+                if build != None:
+                    await ctx.send(str(build))
+                    create = json.dumps(build, ensure_ascii=False, indent=4)
+                    await ctx.send(str(create))
 
             elif options[0] == "dump":
                 serv.dump("dumps_{}_{}.json".format(serv.result["ip"], serv.result["port"]))
