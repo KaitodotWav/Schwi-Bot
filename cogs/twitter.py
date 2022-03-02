@@ -6,13 +6,14 @@ properties = BotUtils.ini_get('Properties.ini')
 tweetC = properties['twitter']
 notify = properties['Notifs']
 
-client2 = tweepy.Client(
+clientA = tweepy.Client(
     #bearer_token=str(tweetC['bearer'])
-    #consumer_key=str(tweetC['con_key']),
-    #consumer_secret=str(tweetC['con_secret']),
+    consumer_key=str(tweetC['con_key']),
+    consumer_secret=str(tweetC['con_secret']),
     access_token=str(tweetC['token']),
     access_token_secret=str(tweetC['secret'])
 )
+client2 = tweepy.API(clientA)
 
 class Twitter(commands.Cog):
     def __init__(self, client, birb):
