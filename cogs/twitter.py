@@ -7,7 +7,7 @@ properties = BotUtils.ini_get('Properties.ini')
 notify = properties['Notifs']
 
 AuthCon = BotUtils.FileHandler.JSON("Data/TwitterAuth.json")
-cache = AuthCon.load()
+cache = AuthCon.Load()
 tweetC = cache["kai2ymd"]
 
 akey = str(tweetC['token'])
