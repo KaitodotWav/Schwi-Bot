@@ -38,7 +38,7 @@ class Twitter(commands.Cog):
     async def debug(self, ctx, args):
         try:
             user = self.birb.get_user(username=str(args))
-            item = user.data.User.id
+            item = user.data.id
             await ctx.send(str(type(item)))
             await ctx.send(str(item))
 
