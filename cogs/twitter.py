@@ -41,8 +41,9 @@ class Twitter(commands.Cog):
             user = self.birb.get_user(screen_name=str(args))
 
             item = user
-            await ctx.send(str(item))
             await ctx.send(str(type(item)))
+            await ctx.send(str(dir(item)))
+
             
         except Exception as e:
             await ctx.send(f"Error! {e}")
