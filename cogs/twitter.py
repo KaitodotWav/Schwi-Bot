@@ -10,7 +10,7 @@ akey = str(tweetC['token'])
 asecret = str(tweetC['secret'])
 ckey = str(tweetC['con_key'])
 csecret = str(tweetC['con_secret'])
-bearer = str(tweetC['bearer'])
+#bearer = str(tweetC['bearer'])
 
 auth = tweepy.OAuthHandler(ckey, csecret)
 auth.set_access_token(akey, asecret)
