@@ -33,13 +33,12 @@ class Twitter(commands.Cog):
         self.zoe = BotUtils.SENDER(self.client)
 
         self.birb = birb
-        self.me = self.birb.get_me()
 
 
     @commands.command()
     async def debug(self, ctx, args):
         try:
-            user = self.birb.get_user(username=str(args))
+            user = self.birb.get_user(screen_name=str(args))
 
             item = user
             await ctx.send(str(item))
