@@ -84,19 +84,22 @@ class Minecraft(commands.Cog):
                 if add_opt:
                     opt.append("all")
                 if str(opt[1]) == "all":
-                    build = serv.result
-                if str(opt[1]) == "list":
-                    contents = serv.result.values()
-                    build = list(contents)
+                    #build = serv.result
+                    build = "all"
+                elif str(opt[1]) == "list":
+                    #contents = serv.result.values()
+                    #build = list(contents)
+                    build = "list"
                 else:
                     try:
-                        build = serv.result[opt[1]]
+                        #build = serv.result[opt[1]]
+                        build = "normal"
                     except:
                         raise SyntaxError(f"unknown key -> {opt}")
 
                 await ctx.send(str(build))
-                create = json.dumps(build, ensure_ascii=False, indent=4)
-                await ctx.send(str(create))
+                #create = json.dumps(build, ensure_ascii=False, indent=4)
+                #await ctx.send(str(create))
 
             elif options[0] == "dump":
                 serv.dump("dumps_{}_{}.json".format(serv.result["ip"], serv.result["port"]))
