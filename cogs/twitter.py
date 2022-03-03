@@ -5,17 +5,24 @@ from discord.ext import commands, tasks
 properties = BotUtils.ini_get('Properties.ini')
 notify = properties['Notifs']
 
+#OAuth
 AuthCon = BotUtils.FileHandler.JSON("Data/TwitterAuth.json")
 cache = AuthCon.Load()
 tweetC = cache["kai2ymd"]
-
+#TweepyAuth
 akey = str(tweetC['token'])
 asecret = str(tweetC['secret'])
 ckey = str(tweetC['con_key'])
 csecret = str(tweetC['con_secret'])
 bearer = str(tweetC['bearer'])
-
-client2 = tweepy.Client(
+#AuthV1
+auth = tweepy.OAuth1UserHandler(
+   ckey, csecret,
+   akey, asecret
+)
+tclient1 = tweepy.API(auth)
+#AuthV2
+tclient2 = tweepy.Client(
     bearer_token=bearer,
     consumer_key=ckey,
     consumer_secret=csecret,
@@ -24,11 +31,12 @@ client2 = tweepy.Client(
 )
 
 class Twitter(commands.Cog):
-    def __init__(self, client, birb):
+    def __init__(self, client, birb1, birb2):
         self.client = client
         self.zoe = BotUtils.SENDER(self.client)
-        self.birb = birb
-        self.watashi = self.birb.get_me()
+        self.birb1 = birb1
+        self.birb2 = birb2
+        self.watashi = self.birb2.get_me()
 
     @commands.command()
     async def gettweets(self, ctx, user):
@@ -47,7 +55,7 @@ class Twitter(commands.Cog):
             await ctx.send(f"Error! {e}")
 
 def setup(client):
-    client.add_cog(Twitter(client, client2))
+    client.add_cog(Twitter(client, tclient1, tclient2))
 
 
 
