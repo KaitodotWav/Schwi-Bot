@@ -44,7 +44,8 @@ class Twitter(commands.Cog):
             que = self.birb1.user_timeline(screen_name=str(user))
             await ctx.send(str(len(que))+" items")
             for i in que:
-                await ctx.send("! "+str(i))
+                await ctx.send(str(type(i)))
+                #await ctx.send("! "+str(i))
         except Exception as e:
             await ctx.send(f"Error! {e}")
 
