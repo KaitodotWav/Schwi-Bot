@@ -45,8 +45,8 @@ class Twitter(commands.Cog):
     @commands.command()
     async def debug(self, ctx, args):
         try:
-            user = self.birb.get_user(username=str(args))
-            item = self.birb.get_list_tweets(user.data.id, max_results=3)
+            user = self.birb2.get_user(username=str(args))
+            item = self.birb2.get_list_tweets(user.data.id, max_results=3)
             await ctx.send(str(type(item)))
             await ctx.send(str(item))
 
