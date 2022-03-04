@@ -50,11 +50,18 @@ class Twitter(commands.Cog):
     async def debug(self, ctx, item):
         try:
             await ctx.send("t! "+str(type(item)))
+        except Exception as e:
+            await ctx.send(f"Error! {e}")
+        try:
             await ctx.send("c! "+str(len(item)))
+        except Exception as e:
+            await ctx.send(f"Error! {e}")
+        try:
             await ctx.send("d! "+str(dir(item)))
+        except Exception as e:
+            await ctx.send(f"Error! {e}")
+        try:
             await ctx.send("! "+str(item))
-
-            
         except Exception as e:
             await ctx.send(f"Error! {e}")
 
