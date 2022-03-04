@@ -46,19 +46,28 @@ class Twitter(commands.Cog):
         self.watashi = self.birb2.get_me()
         self.cloud = cloud
 
-    async def limithandle(self, cursor):
+    async def limithandle(self, ctx, user):
+        last_id = None
+        cc = 2
         while True:
             try:
-                yield cursor.next()
+                if last_id == None:
+                    tweets = self.birb1.user_timeline(screen_name=str(user), count=cc)
+                else:
+                    tweets = self.birb1.user_timeline(screen_name=str(user), count=cc, max_id=last_id)
+                finally:
+                    for t in tweets:
+                        await ctx.send(str(t.text))
+                        await ctx.send(str(t.id))
+                    last_id = tweets[-1].id
             except tweepy.RateLimitError:
                 time.sleep(15*60)
 
     @commands.command()
     async def gettweets(self, ctx, user):
         try:
-            que = self.birb1.user_timeline(screen_name=str(user))
-            for tweet in self.limithandle(tweepy.Cursor(self.birb1.user_timeline(screen_name=str(user), count=2)).item()):
-                await ctx.send(str(tweet.text))
+            await limithandle(ctx, user)
+            
             #if "media" in ttt:
             #    for media in ttt["media"]:
             #        await ctx.send(media["media_url"])
