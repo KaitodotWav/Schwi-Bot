@@ -44,15 +44,15 @@ async def saveCloud(ctx, link, folder):
         filename = slicelink[-1]
         with open(f"Data/{filename}", "w") as F:
             F.write(file)
-        await ctx.send("saved")
+        #await ctx.send("saved")
         fold = cloudClient.find(f"TweetArchive/{folder}")
-        await ctx.send(str(fold))
+        #await ctx.send(str(fold))
         if fold == None:
             cloudClient.create_folder(f"TweetArchive/{folder}")
             fold = cloudClient.find(f"TweetArchive/{folder}")
         cloudClient.upload(f'Data/{filename}', fold[0])
         os.remove(f"Data/{filename}")
-        await ctx.send("done")
+        await ctx.send("Saved to cloud!")
     except Exception as e:
         await ctx.send(f"Error! {e}")
 
@@ -93,8 +93,8 @@ async def filterLink(ctx, tweets, user):
                         for k in m:
                             await ctx.send(">>{}:\n{}".format(k, m[f"{k}"]))
                 for l in urls:
-                    await ctx.send(f"!! {l}")
-                    await self.save(ctx, l, user)
+                    #await ctx.send(f"!! {l}")
+                    await self.saveCloud(ctx, l, user)
             except:
                 #tx = t.entities
                 #await self.debug(ctx, tx)
