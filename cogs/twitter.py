@@ -130,7 +130,7 @@ class Twitter(commands.Cog):
                     tx = t.extended_entities
                     med = tx["media"]
                     for m in med:
-                        await ctx.send(str(m["media_url"])
+                        await ctx.send(str(m["media_url"]))
                 except:
                     tx = t.entities
                     await self.debug(ctx, tx)
