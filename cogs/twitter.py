@@ -123,9 +123,12 @@ class Twitter(commands.Cog):
 
     @commands.command()
     async def test(self, ctx, args):
-        tweets = self.birb1.user_timeline(screen_name=str(args), count=2)
-        for t in tweets:
-            await self.debug(t)
+        try:
+            tweets = self.birb1.user_timeline(screen_name=str(args), count=2)
+            for t in tweets:
+                await self.debug(ctx, t)
+        except Exception as e:
+            await ctx.send(f"Error! {e}")
 
     async def debug(self, ctx, item):
         try:
