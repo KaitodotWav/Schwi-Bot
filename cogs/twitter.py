@@ -53,6 +53,8 @@ async def saveCloud(ctx, link, folder):
         cloudClient.upload(f'Data/{filename}', fold[0])
         os.remove(f"Data/{filename}")
         await ctx.send("done")
+    except Exception as e:
+        await ctx.send(f"Error! {e}")
 
 async def filterLink(ctx, tweets, user):
     def selvid(vidlist):
