@@ -59,6 +59,11 @@ class Twitter(commands.Cog):
         except Exception as e:
             await ctx.send(f"Error! {e}")
 
+    @commands.command()
+    async def test(self, ctx, args):
+        folder = self.cloud.find(f"{args}")
+        await self.debug(ctx, folder)
+
     async def debug(self, ctx, item):
         try:
             await ctx.send("t! "+str(type(item)))
