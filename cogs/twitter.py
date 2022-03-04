@@ -42,20 +42,17 @@ class Twitter(commands.Cog):
     async def gettweets(self, ctx, user):
         try:
             que = self.birb1.user_timeline(screen_name=str(user))
-            await ctx.send(str(len(que))+" items")
-            for i in que:
-                await ctx.send(str(type(i)))
-                #await ctx.send("! "+str(i))
+            item = que[0]
+            await self.debug(item)
         except Exception as e:
             await ctx.send(f"Error! {e}")
 
-    @commands.command()
-    async def debug(self, ctx, args):
+    async def debug(self, ctx, item):
         try:
-            user = self.birb2.get_user(username=str(args))
-            item = self.birb2.get_list_tweets(user.data.id, max_results=3)
-            await ctx.send(str(type(item)))
-            await ctx.send(str(item))
+            await ctx.send("t! "+str(type(item)))
+            await ctx.send("c! "+str(len(item)))
+            await ctx.send("d! "+str(dir(item)))
+            await ctx.send("! "+str(item))
 
             
         except Exception as e:
