@@ -42,6 +42,11 @@ async def saveCloud(ctx, link, folder):
         file = requests.get(link)
         slicelink = str(link).split("/")
         filename = slicelink[-1]
+        if "?" in filename:
+            slice2 = filename.split("?")
+            for i in slice2:
+                if "." in i:
+                    filename = i
         with open(f"Data/{filename}", "wb") as F:
             F.write(file.content)
         #await ctx.send("saved")
