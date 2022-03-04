@@ -38,7 +38,7 @@ cloudClient = mega.login(
 )
 
 class TweetCollector():
-    def __init__(self, client, user, cloud, birb)
+    def __init__(self, client, user, cloud, birb):
         self.client = client
         self.cloud = cloud
         self.birb1 = birb
