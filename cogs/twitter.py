@@ -147,9 +147,10 @@ class Twitter(commands.Cog):
                                         bitrate = int(V["bitrate"])
                                 except:
                                     pass
-                            await ctx.send(f"{bitrate}\n{lvid}")
-                        #for k in m:
-                            #await ctx.send(">>{}:\n{}".format(k, m[f"{k}"]))
+                            await ctx.send(f"bitrate: {bitrate}\n{lvid}")
+                        else:
+                            for k in m:
+                                await ctx.send(">>{}:\n{}".format(k, m[f"{k}"]))
                 except:
                     tx = t.entities
                     await self.debug(ctx, tx)
