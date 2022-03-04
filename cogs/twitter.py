@@ -94,7 +94,7 @@ async def filterLink(ctx, tweets, user):
                             await ctx.send(">>{}:\n{}".format(k, m[f"{k}"]))
                 for l in urls:
                     #await ctx.send(f"!! {l}")
-                    await self.saveCloud(ctx, l, user)
+                    await saveCloud(ctx, l, user)
             except:
                 #tx = t.entities
                 #await self.debug(ctx, tx)
