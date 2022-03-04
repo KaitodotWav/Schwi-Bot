@@ -66,8 +66,8 @@ class TweetCollector():
                             await ctx.send(str(med["media_url"]))
 
                 self.last_id = tweets[-1].id
-            except tweepy.RateLimitError:
-                time.sleep(15*60)
+            #except tweepy.RateLimitError:
+                #time.sleep(15*60)
             except Exception as e:
                 await ctx.send(f"Error! {e}")
             time.sleep(5)
