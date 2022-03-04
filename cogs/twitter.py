@@ -1,5 +1,5 @@
 from KaitoUWU import BotUtils
-import discord, tweepy, json
+import discord, tweepy, json, time
 from discord.ext import commands, tasks
 from mega import Mega
 
@@ -46,15 +46,22 @@ class Twitter(commands.Cog):
         self.watashi = self.birb2.get_me()
         self.cloud = cloud
 
+    async def limithandle(self, cursor):
+        while True:
+            try:
+                yield cursor.next()
+            except tweepy.RateLimitError:
+                time.sleep(15*60)
+
     @commands.command()
     async def gettweets(self, ctx, user):
         try:
             que = self.birb1.user_timeline(screen_name=str(user))
-            item = que[0]
-            ttt = item.entities
-            if "media" in ttt:
-                for media in ttt["media"]:
-                    await ctx.send(media["media_url"])
+            for tweet in self.limithandle(tweepy.Cursor(self.birb1.user_timeline(screen_name=str(user), count=2)))
+                await ctx.send(str(tweet.text))
+            #if "media" in ttt:
+            #    for media in ttt["media"]:
+            #        await ctx.send(media["media_url"])
             
         except Exception as e:
             await ctx.send(f"Error! {e}")
