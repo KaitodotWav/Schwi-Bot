@@ -93,9 +93,9 @@ class Twitter(commands.Cog):
         try:
             if self.running.client.channel.id == ctx.channel.id and self.running.user == user:
                 if str(option) == "stop":
-                    await Tobj.stop()
+                    await self.running.stop()
                 elif str(option) == "continue":
-                    await Tobj.start()
+                    await self.running.start()
                 else:
                     await ctx.send("fetching tweets in background...")
             else:
