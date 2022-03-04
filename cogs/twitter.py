@@ -42,10 +42,11 @@ class Twitter(commands.Cog):
     async def gettweets(self, ctx, user):
         try:
             que = self.birb1.user_timeline(screen_name=str(user))
-            item = que[1]
+            item = que[0]
             ttt = item.entities
-            cache = json.dumps(ttt, ensure_ascii=False, indent=3)
-            await ctx.send(cache)
+            if "media" in ttt:
+                for media in ttt["media"]:
+                    await ctx.send(media["media_url"])
             
         except Exception as e:
             await ctx.send(f"Error! {e}")
