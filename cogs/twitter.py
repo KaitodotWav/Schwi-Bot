@@ -37,6 +37,45 @@ cloudClient = mega.login(
     "kaito12.2004"
 )
 
+async def filterLink(ctx, tweets):
+    def selvid(vidlist):
+        bitrate = -1
+        lvid = None
+        for V in vidlist["variants"]:
+            try:
+                if int(V["bitrate"]) > bitrate:
+                    lvid = V["url"]
+                    bitrate = int(V["bitrate"])
+            except:
+                pass
+        return bitrate, lvid
+    try:
+        for t in tweets:
+            try:
+                tx = t.extended_entities
+                med = tx["media"]
+                for m in med:
+                    m_type = str(m["type"])
+                    if m_type == "photo":
+                        await ctx.send(str(m["media_url"]))
+                    elif m_type == "video":
+                        vinf = m["video_info"]
+                        bitrate, lvid = selvid(vinf)
+                        await ctx.send(f"VID! bitrate: {bitrate}\n{lvid}")
+                    elif m_type == "animated_gif":
+                        vinf = m["video_info"]
+                        bitrate, lvid = selvid(vinf)
+                        await ctx.send(f"GIF! bitrate: {bitrate}\n{lvid}")
+                    else:
+                        for k in m:
+                            await ctx.send(">>{}:\n{}".format(k, m[f"{k}"]))
+            except:
+                #tx = t.entities
+                #await self.debug(ctx, tx)
+                pass
+    except Exception as e:
+        await ctx.send(f"Error! {e}")
+
 class TweetCollector():
     def __init__(self, client, user, cloud, birb):
         self.client = client
@@ -60,7 +99,7 @@ class TweetCollector():
                     tweets = self.birb1.user_timeline(screen_name=str(user), count=cc)
                 else:
                     tweets = self.birb1.user_timeline(screen_name=str(user), count=cc, max_id=self.last_id-1)
-                await self.filterLink(ctx, tweets)
+                await filterLink(ctx, tweets)
                 self.last_id = tweets[-1].id
             #except tweepy.RateLimitError:
                 #time.sleep(15*60)
@@ -120,46 +159,9 @@ class Twitter(commands.Cog):
         except Exception as e:
             await ctx.send(f"Error! {e}")
         else:
-            await self.filterLink(ctx, tweets)
+            await filterLink(ctx, tweets)
 
-    async def filterLink(self, ctx, tweets):
-        def selvid(vidlist):
-            bitrate = -1
-            lvid = None
-            for V in vidlist["variants"]:
-                try:
-                    if int(V["bitrate"]) > bitrate:
-                        lvid = V["url"]
-                        bitrate = int(V["bitrate"])
-                except:
-                    pass
-            return bitrate, lvid
-        try:
-            for t in tweets:
-                try:
-                    tx = t.extended_entities
-                    med = tx["media"]
-                    for m in med:
-                        m_type = str(m["type"])
-                        if m_type == "photo":
-                            await ctx.send(str(m["media_url"]))
-                        elif m_type == "video":
-                            vinf = m["video_info"]
-                            bitrate, lvid = selvid(vinf)
-                            await ctx.send(f"VID! bitrate: {bitrate}\n{lvid}")
-                        elif m_type == "animated_gif":
-                            vinf = m["video_info"]
-                            bitrate, lvid = selvid(vinf)
-                            await ctx.send(f"GIF! bitrate: {bitrate}\n{lvid}")
-                        else:
-                            for k in m:
-                                await ctx.send(">>{}:\n{}".format(k, m[f"{k}"]))
-                except:
-                    #tx = t.entities
-                    #await self.debug(ctx, tx)
-                    pass
-        except Exception as e:
-            await ctx.send(f"Error! {e}")
+    
 
     async def debug(self, ctx, item):
         try:
