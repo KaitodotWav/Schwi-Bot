@@ -1,5 +1,5 @@
 from KaitoUWU import BotUtils
-import discord, tweepy
+import discord, tweepy, json
 from discord.ext import commands, tasks
 
 properties = BotUtils.ini_get('Properties.ini')
@@ -43,8 +43,10 @@ class Twitter(commands.Cog):
         try:
             que = self.birb1.user_timeline(screen_name=str(user))
             item = que[0]
-            await self.debug(ctx, item.entities)
-            await self.debug(ctx, item.text)
+            ttt = item.entities
+            cache = json.dumps(ttt, ensure_ascii=False, indent=3)
+            await ctx.send(cache)
+            
         except Exception as e:
             await ctx.send(f"Error! {e}")
 
