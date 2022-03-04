@@ -146,7 +146,7 @@ class Twitter(commands.Cog):
             await ctx.send(f"Error! {e}")
         if type(item) == dict:
             try:
-                jd = json.dump(item, ensure_ascii=false, indent=4)
+                jd = json.dump(item, ensure_ascii=False, indent=4)
                 await ctx.send("json! "+str(jd))
             except Exception as e:
                 await ctx.send(f"Error! {e}")
