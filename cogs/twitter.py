@@ -88,7 +88,7 @@ class Twitter(commands.Cog):
         self.running = {}
 
     @commands.command()
-    async def gettweets(self, ctx, user, option=None):
+    async def getmedia(self, ctx, user, option=None):
         try:
             async def makeinstance():
                 Tobj = TweetCollector(ctx, user, self.cloud, self.birb1)
@@ -109,10 +109,6 @@ class Twitter(commands.Cog):
                     await makeinstance()
             else:
                 await makeinstance()
-                
-            #if "media" in ttt:
-            #    for media in ttt["media"]:
-            #        await ctx.send(media["media_url"])
             
         except Exception as e:
             await ctx.send(f"Error! {e}")
@@ -159,8 +155,9 @@ class Twitter(commands.Cog):
                             for k in m:
                                 await ctx.send(">>{}:\n{}".format(k, m[f"{k}"]))
                 except:
-                    tx = t.entities
-                    await self.debug(ctx, tx)
+                    #tx = t.entities
+                    #await self.debug(ctx, tx)
+                    pass
         except Exception as e:
             await ctx.send(f"Error! {e}")
 
