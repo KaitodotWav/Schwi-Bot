@@ -45,7 +45,7 @@ async def saveCloud(link, folder):
         F.write(file)
     fold = m.find(f'{folder}')
     m.upload(f'Data/{filename}', fold[0])
-    os.remove(f"Data/{filename})
+    os.remove(f"Data/{filename}")
 
 async def filterLink(ctx, tweets, user):
     def selvid(vidlist):
