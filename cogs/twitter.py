@@ -61,8 +61,9 @@ class TweetCollector():
                 else:
                     tweets = self.birb1.user_timeline(screen_name=str(user), count=cc, max_id=self.last_id-1)
                 for t in tweets:
-                    await ctx.send(str(t.text))
-                    await ctx.send(str(t.id))
+                    if "media" in t:
+                        for med in t["media"]:
+                            await ctx.send(str(med["media_url"]))
 
                 self.last_id = tweets[-1].id
             except tweepy.RateLimitError:
