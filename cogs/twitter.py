@@ -43,8 +43,11 @@ async def saveCloud(link, folder):
     filename = slicelink[-1]
     with open(f"Data/{filename}", "w") as F:
         F.write(file)
-    fold = m.find(f'{folder}')
-    m.upload(f'Data/{filename}', fold[0])
+    fold = cloudClient.find(f"TweetArchive/{folder}")
+    if fold == None:
+        cloudClient.create_folder(f"TweetArchive/{folder}")
+        fold = cloudClient.find(f"TweetArchive/{folder}")
+    cloudClient.upload(f'Data/{filename}', fold[0])
     os.remove(f"Data/{filename}")
 
 async def filterLink(ctx, tweets, user):
@@ -102,7 +105,7 @@ class TweetCollector():
 
     async def loophandle(self, last_id=None):
         ctx = self.client
-        cc = 2
+        cc = 50
         if last_id != None:
             self.last_id = last_id
         user = self.user
@@ -121,7 +124,7 @@ class TweetCollector():
             except Exception as e:
                 await ctx.send(f"Error! {e}\loop will stop for 15mins")
                 time.sleel(15*60)
-            time.sleep(5)
+            time.sleep(2)
         await ctx.send("loop stopped")
 
     async def start(self, last_id=None):
