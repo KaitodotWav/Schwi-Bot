@@ -89,15 +89,12 @@ class Twitter(commands.Cog):
         self.running = None
 
     @commands.command()
-    async def gettweets(self, ctx, user, option=None):
+    async def gettweets(self, ctx, user):
         try:
-            if self.running.client.channel.id == ctx.channel.id and self.running.user == user:
-                if str(option) == "stop":
-                    await self.running.stop()
-                elif str(option) == "continue":
-                    await self.running.start()
-                else:
-                    await ctx.send("fetching tweets in background...")
+            if str(user) == "!stop":
+                await self.running.stop()
+            elif str(user) == "!continue":
+                await self.running.start()
             else:
                 self.running = TweetCollector(ctx, user, self.cloud, self.birb1)
                 self.running.start()
