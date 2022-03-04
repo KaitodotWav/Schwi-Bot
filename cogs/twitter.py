@@ -138,6 +138,7 @@ class Twitter(commands.Cog):
             await ctx.send(f"Error! {e}")
 
 
+
 def setup(client):
     client.add_cog(Twitter(client, tclient1, tclient2, cloudClient))
 
