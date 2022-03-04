@@ -67,7 +67,7 @@ class TweetCollector():
                 self.last_id = tweets[-1].id
             except tweepy.RateLimitError:
                 time.sleep(15*60)
-            time.sleep(2)
+            time.sleep(5)
         await ctx.send("loop stopped")
 
     async def start(self, last_id=None):
@@ -93,14 +93,16 @@ class Twitter(commands.Cog):
         try:
             if str(ctx.channel.id) in self.running:
                 Tobj = self.running[f"{ctx.channrl.id}"]
-                if option == "stop":
+                if str(option) == "stop":
                     await Tobj.stop()
-                elif option == "continue":
+                elif str(option) == "continue":
                     await Tobj.start()
+                else:
+                    await ctx.send("fetching tweets in background...")
             else:
                 Tobj = TweetCollector(ctx, user, self.cloud, self.birb1)
-                await Tobj.start()
                 self.running[str(ctx.channel.id)] = Tobj
+                self.running[str(ctx.channel.id)].start()
                 
             #if "media" in ttt:
             #    for media in ttt["media"]:
