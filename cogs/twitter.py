@@ -1,5 +1,5 @@
 from KaitoUWU import BotUtils
-import discord, tweepy, json, time, requests
+import discord, tweepy, json, time, requests, os
 from discord.ext import commands, tasks
 from mega import Mega
 
@@ -54,7 +54,8 @@ async def saveCloud(ctx, link, folder):
         os.remove(f"Data/{filename}")
         #await ctx.send("Saved to cloud!")
     except Exception as e:
-        await ctx.send(f"Error! {e}")
+        #await ctx.send(f"Error! {e}")
+        pass
 
 async def filterLink(ctx, tweets, user):
     def selvid(vidlist):
