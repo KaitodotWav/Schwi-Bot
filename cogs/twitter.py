@@ -60,11 +60,7 @@ class TweetCollector():
                     tweets = self.birb1.user_timeline(screen_name=str(user), count=cc)
                 else:
                     tweets = self.birb1.user_timeline(screen_name=str(user), count=cc, max_id=self.last_id-1)
-                for t in tweets:
-                    if "media" in t.entities:
-                        for med in t["media"]:
-                            await ctx.send(str(med["media_url"]))
-
+                await self.filterLink(ctx, tweets)
                 self.last_id = tweets[-1].id
             #except tweepy.RateLimitError:
                 #time.sleep(15*60)
@@ -125,14 +121,35 @@ class Twitter(commands.Cog):
     async def test(self, ctx, args):
         try:
             tweets = self.birb1.user_timeline(screen_name=str(args), count=2)
+        except Exception as e:
+            await ctx.send(f"Error! {e}")
+        else:
+            await self.filterLink(ctx, tweets)
+
+    async def filterLink(self, ctx, tweets):
+        try:
             for t in tweets:
                 try:
                     tx = t.extended_entities
                     med = tx["media"]
                     for m in med:
-                        await ctx.send(str(m["media_url"]))
-                        for k in m:
-                            await ctx.send(">>{}:\n{}".format(k, m[f"{k}"]))
+                        m_type = str(m["type"])
+                        if m_type == "photo":
+                            await ctx.send(str(m["media_url"]))
+                        elif m_type == "video":
+                            vinf = m["video_info"]
+                            bitrate = 0
+                            lvid = None
+                            for V in vinf["variants"]:
+                                try:
+                                    if int(V["bitrate"]) > bitrate:
+                                        lvid = V["url"]
+                                        bitrate = int(V["bitrate"])
+                                except:
+                                    pass
+                            await ctx.send(f"{bitrate}\n{lvid}")
+                        #for k in m:
+                            #await ctx.send(">>{}:\n{}".format(k, m[f"{k}"]))
                 except:
                     tx = t.entities
                     await self.debug(ctx, tx)
