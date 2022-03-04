@@ -91,8 +91,7 @@ class Twitter(commands.Cog):
     @commands.command()
     async def gettweets(self, ctx, user, option=None):
         try:
-            if str(ctx.channel.id) in self.running:
-                Tobj = self.running[f"{ctx.channel.id}"]
+            if self.running.client.channel.id == ctx.channel.id and self.running.user == user:
                 if str(option) == "stop":
                     await Tobj.stop()
                 elif str(option) == "continue":
@@ -100,10 +99,8 @@ class Twitter(commands.Cog):
                 else:
                     await ctx.send("fetching tweets in background...")
             else:
-                Tobj = TweetCollector(ctx, user, self.cloud, self.birb1)
-                self.running[str(ctx.channel.id)] = Tobj
-                run = self.running[str(ctx.channel.id)]
-                run.start()
+                self.running = TweetCollector(ctx, user, self.cloud, self.birb1)
+                self.running.start()
                 
             #if "media" in ttt:
             #    for media in ttt["media"]:
