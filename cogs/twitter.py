@@ -1,5 +1,5 @@
 from KaitoUWU import BotUtils
-import discord, tweepy, json, time
+import discord, tweepy, json, time, requests
 from discord.ext import commands, tasks
 from mega import Mega
 
@@ -37,7 +37,17 @@ cloudClient = mega.login(
     "kaito12.2004"
 )
 
-async def filterLink(ctx, tweets):
+async def saveCloud(link, folder):
+    file = requests.get(link)
+    slicelink = str(link).split("/")
+    filename = slicelink[-1]
+    with open(f"Data/{filename}", "w") as F:
+        F.write(file)
+    fold = m.find(f'{folder}')
+    m.upload(f'Data/{filename}', fold[0])
+    os.remove(f"Data/{filename})
+
+async def filterLink(ctx, tweets, user):
     def selvid(vidlist):
         bitrate = -1
         lvid = None
@@ -54,21 +64,27 @@ async def filterLink(ctx, tweets):
             try:
                 tx = t.extended_entities
                 med = tx["media"]
+                urls = []
                 for m in med:
                     m_type = str(m["type"])
                     if m_type == "photo":
+                        urls.append(str(m["media_url"]))
                         await ctx.send(str(m["media_url"]))
                     elif m_type == "video":
                         vinf = m["video_info"]
                         bitrate, lvid = selvid(vinf)
+                        urls.append(lvid)
                         await ctx.send(f"VID! bitrate: {bitrate}\n{lvid}")
                     elif m_type == "animated_gif":
                         vinf = m["video_info"]
                         bitrate, lvid = selvid(vinf)
+                        urls.append(lvid)
                         await ctx.send(f"GIF! bitrate: {bitrate}\n{lvid}")
                     else:
                         for k in m:
                             await ctx.send(">>{}:\n{}".format(k, m[f"{k}"]))
+                for l in urls:
+                    await self.save(l, user)
             except:
                 #tx = t.entities
                 #await self.debug(ctx, tx)
@@ -77,9 +93,8 @@ async def filterLink(ctx, tweets):
         await ctx.send(f"Error! {e}")
 
 class TweetCollector():
-    def __init__(self, client, user, cloud, birb):
+    def __init__(self, client, user, birb):
         self.client = client
-        self.cloud = cloud
         self.birb1 = birb
         self.loop = True
         self.last_id = None
@@ -99,12 +114,13 @@ class TweetCollector():
                     tweets = self.birb1.user_timeline(screen_name=str(user), count=cc)
                 else:
                     tweets = self.birb1.user_timeline(screen_name=str(user), count=cc, max_id=self.last_id-1)
-                await filterLink(ctx, tweets)
+                await filterLink(ctx, tweets, user)
                 self.last_id = tweets[-1].id
             #except tweepy.RateLimitError:
                 #time.sleep(15*60)
             except Exception as e:
-                await ctx.send(f"Error! {e}")
+                await ctx.send(f"Error! {e}\loop will stop for 15mins")
+                time.sleel(15*60)
             time.sleep(5)
         await ctx.send("loop stopped")
 
@@ -130,7 +146,7 @@ class Twitter(commands.Cog):
     async def getmedia(self, ctx, user, option=None):
         try:
             async def makeinstance():
-                Tobj = TweetCollector(ctx, user, self.cloud, self.birb1)
+                Tobj = TweetCollector(ctx, user, self.birb1)
                 self.running[str(ctx.channel.id)] = Tobj
                 run = self.running[str(ctx.channel.id)]
                 await run.start()
@@ -159,7 +175,7 @@ class Twitter(commands.Cog):
         except Exception as e:
             await ctx.send(f"Error! {e}")
         else:
-            await filterLink(ctx, tweets)
+            await filterLink(ctx, tweets, args)
 
     
 
