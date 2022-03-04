@@ -43,6 +43,7 @@ async def saveCloud(link, folder):
     filename = slicelink[-1]
     with open(f"Data/{filename}", "w") as F:
         F.write(file)
+    print(link)
     fold = cloudClient.find(f"TweetArchive/{folder}")
     print(fold)
     if fold == None:
