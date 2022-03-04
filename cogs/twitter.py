@@ -126,7 +126,8 @@ class Twitter(commands.Cog):
         try:
             tweets = self.birb1.user_timeline(screen_name=str(args), count=2)
             for t in tweets:
-                await self.debug(ctx, t)
+                tx = t.extended_entities
+                await self.debug(ctx, tx)
         except Exception as e:
             await ctx.send(f"Error! {e}")
 
