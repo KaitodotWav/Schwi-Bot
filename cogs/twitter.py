@@ -44,6 +44,7 @@ async def saveCloud(link, folder):
     with open(f"Data/{filename}", "w") as F:
         F.write(file)
     fold = cloudClient.find(f"TweetArchive/{folder}")
+    print(fold)
     if fold == None:
         cloudClient.create_folder(f"TweetArchive/{folder}")
         fold = cloudClient.find(f"TweetArchive/{folder}")
