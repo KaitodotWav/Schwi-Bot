@@ -86,7 +86,7 @@ class Twitter(commands.Cog):
         self.birb2 = birb2
         self.watashi = self.birb2.get_me()
         self.cloud = cloud
-        self.running = {}
+        self.running = None
 
     @commands.command()
     async def gettweets(self, ctx, user, option=None):
