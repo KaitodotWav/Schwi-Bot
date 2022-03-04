@@ -68,6 +68,8 @@ class TweetCollector():
                 self.last_id = tweets[-1].id
             except tweepy.RateLimitError:
                 time.sleep(15*60)
+            except Exception as e:
+                await ctx.send(f"Error! {e})
             time.sleep(5)
         await ctx.send("loop stopped")
 
