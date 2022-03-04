@@ -92,7 +92,7 @@ class Twitter(commands.Cog):
     async def gettweets(self, ctx, user, option=None):
         try:
             if str(ctx.channel.id) in self.running:
-                Tobj = self.running[f"{ctx.channrl.id}"]
+                Tobj = self.running[f"{ctx.channel.id}"]
                 if str(option) == "stop":
                     await Tobj.stop()
                 elif str(option) == "continue":
@@ -102,7 +102,8 @@ class Twitter(commands.Cog):
             else:
                 Tobj = TweetCollector(ctx, user, self.cloud, self.birb1)
                 self.running[str(ctx.channel.id)] = Tobj
-                self.running[str(ctx.channel.id)].start()
+                run = self.running[str(ctx.channel.id)]
+                run.start()
                 
             #if "media" in ttt:
             #    for media in ttt["media"]:
