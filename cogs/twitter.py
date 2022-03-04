@@ -137,7 +137,7 @@ class TweetCollector():
             except Exception as e:
                 await ctx.send(f"Error! {e}\loop will stop for 15mins")
                 time.sleel(15*60)
-            time.sleep(2)
+            #time.sleep(2)
         await ctx.send("loop stopped")
 
     async def start(self, last_id=None):
