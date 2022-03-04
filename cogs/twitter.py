@@ -1,6 +1,7 @@
 from KaitoUWU import BotUtils
 import discord, tweepy, json
 from discord.ext import commands, tasks
+from mega import Mega
 
 properties = BotUtils.ini_get('Properties.ini')
 notify = properties['Notifs']
@@ -29,14 +30,21 @@ tclient2 = tweepy.Client(
     access_token=akey,
     access_token_secret=asecret
 )
+#cloudclient
+mega = Mega()
+cloudClient = mega.login(
+    "tiaramolinos@gmail.com",
+    "kaito12.2004"
+)
 
 class Twitter(commands.Cog):
-    def __init__(self, client, birb1, birb2):
+    def __init__(self, client, birb1, birb2, cloud):
         self.client = client
         self.zoe = BotUtils.SENDER(self.client)
         self.birb1 = birb1
         self.birb2 = birb2
         self.watashi = self.birb2.get_me()
+        self.cloud = cloud
 
     @commands.command()
     async def gettweets(self, ctx, user):
@@ -70,7 +78,7 @@ class Twitter(commands.Cog):
             await ctx.send(f"Error! {e}")
 
 def setup(client):
-    client.add_cog(Twitter(client, tclient1, tclient2))
+    client.add_cog(Twitter(client, tclient1, tclient2, cloudClient))
 
 
 
