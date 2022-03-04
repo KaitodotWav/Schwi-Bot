@@ -66,7 +66,7 @@ class Twitter(commands.Cog):
     @commands.command()
     async def gettweets(self, ctx, user):
         try:
-            await limithandle(ctx, user)
+            await self.limithandle(ctx, user)
             
             #if "media" in ttt:
             #    for media in ttt["media"]:
