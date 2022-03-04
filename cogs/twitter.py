@@ -55,11 +55,10 @@ class Twitter(commands.Cog):
                     tweets = self.birb1.user_timeline(screen_name=str(user), count=cc)
                 else:
                     tweets = self.birb1.user_timeline(screen_name=str(user), count=cc, max_id=last_id)
-                finally:
-                    for t in tweets:
-                        await ctx.send(str(t.text))
-                        await ctx.send(str(t.id))
-                    last_id = tweets[-1].id
+                for t in tweets:
+                    await ctx.send(str(t.text))
+                    await ctx.send(str(t.id))
+                last_id = tweets[-1].id
             except tweepy.RateLimitError:
                 time.sleep(15*60)
 
