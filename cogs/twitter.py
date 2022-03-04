@@ -123,13 +123,9 @@ class Twitter(commands.Cog):
 
     @commands.command()
     async def test(self, ctx, args):
-        #folder = self.cloud.find(f"{args}")
-        try:
-            mk=self.cloud.create_folder(f"{args}")
-            await self.debug(ctx, mk)
-            await ctx.send("folder created")
-        except Exception as e:
-            await ctx.send("Error! {e}")
+        tweets = self.birb1.user_timeline(screen_name=str(args), count=2)
+        for t in tweets:
+            await self.debug(t)
 
     async def debug(self, ctx, item):
         try:
