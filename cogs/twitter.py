@@ -42,7 +42,7 @@ async def saveCloud(ctx, link, folder):
         file = requests.get(link)
         slicelink = str(link).split("/")
         filename = slicelink[-1]
-        with open(f"Data/{filename}", "w") as F:
+        with open(f"Data/{filename}", "wb") as F:
             F.write(file.content)
         #await ctx.send("saved")
         fold = cloudClient.find(f"TweetArchive/{folder}")
@@ -52,7 +52,7 @@ async def saveCloud(ctx, link, folder):
             fold = cloudClient.find(f"TweetArchive/{folder}")
         cloudClient.upload(f'Data/{filename}', fold[0])
         os.remove(f"Data/{filename}")
-        await ctx.send("Saved to cloud!")
+        #await ctx.send("Saved to cloud!")
     except Exception as e:
         await ctx.send(f"Error! {e}")
 
