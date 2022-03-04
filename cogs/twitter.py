@@ -151,7 +151,7 @@ class Twitter(commands.Cog):
                             vinf = m["video_info"]
                             bitrate, lvid = selvid(vinf)
                             await ctx.send(f"VID! bitrate: {bitrate}\n{lvid}")
-                        elif m_type == "animated_gif"
+                        elif m_type == "animated_gif":
                             vinf = m["video_info"]
                             bitrate, lvid = selvid(vinf)
                             await ctx.send(f"GIF! bitrate: {bitrate}\n{lvid}")
