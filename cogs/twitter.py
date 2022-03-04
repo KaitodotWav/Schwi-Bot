@@ -42,7 +42,7 @@ class Twitter(commands.Cog):
     async def gettweets(self, ctx, user):
         try:
             que = self.birb1.user_timeline(screen_name=str(user))
-            item = que[0]
+            item = que[1]
             ttt = item.entities
             cache = json.dumps(ttt, ensure_ascii=False, indent=3)
             await ctx.send(cache)
