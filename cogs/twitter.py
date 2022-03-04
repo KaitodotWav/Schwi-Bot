@@ -56,7 +56,7 @@ class TweetCollector():
             if self.loop == False:
                 break
             try:
-                if last_id == None:
+                if self.last_id == None:
                     tweets = self.birb1.user_timeline(screen_name=str(user), count=cc)
                 else:
                     tweets = self.birb1.user_timeline(screen_name=str(user), count=cc, max_id=self.last_id-1)
