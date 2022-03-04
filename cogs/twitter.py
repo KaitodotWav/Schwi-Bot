@@ -102,6 +102,7 @@ class Twitter(commands.Cog):
         except Exception as e:
             await ctx.send(f"Error! {e}")
 
+
 def setup(client):
     client.add_cog(Twitter(client, tclient1, tclient2, cloudClient))
 
