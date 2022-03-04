@@ -127,6 +127,17 @@ class Twitter(commands.Cog):
             await self.filterLink(ctx, tweets)
 
     async def filterLink(self, ctx, tweets):
+        def selvid(vidlist):
+            bitrate = -1
+            lvid = None
+            for V in vidlist["variants"]:
+                try:
+                    if int(V["bitrate"]) > bitrate:
+                        lvid = V["url"]
+                        bitrate = int(V["bitrate"])
+                except:
+                    pass
+            return bitrate, lvid
         try:
             for t in tweets:
                 try:
@@ -138,16 +149,12 @@ class Twitter(commands.Cog):
                             await ctx.send(str(m["media_url"]))
                         elif m_type == "video":
                             vinf = m["video_info"]
-                            bitrate = 0
-                            lvid = None
-                            for V in vinf["variants"]:
-                                try:
-                                    if int(V["bitrate"]) > bitrate:
-                                        lvid = V["url"]
-                                        bitrate = int(V["bitrate"])
-                                except:
-                                    pass
-                            await ctx.send(f"bitrate: {bitrate}\n{lvid}")
+                            bitrate, lvid = selvid(vinf)
+                            await ctx.send(f"VID! bitrate: {bitrate}\n{lvid}")
+                        elif m_type == "animated_gif"
+                            vinf = m["video_info"]
+                            bitrate, lvid = selvid(vinf)
+                            await ctx.send(f"GIF! bitrate: {bitrate}\n{lvid}")
                         else:
                             for k in m:
                                 await ctx.send(">>{}:\n{}".format(k, m[f"{k}"]))
