@@ -37,20 +37,22 @@ cloudClient = mega.login(
     "kaito12.2004"
 )
 
-async def saveCloud(link, folder):
-    file = requests.get(link)
-    slicelink = str(link).split("/")
-    filename = slicelink[-1]
-    with open(f"Data/{filename}", "w") as F:
-        F.write(file)
-    print(link)
-    fold = cloudClient.find(f"TweetArchive/{folder}")
-    print(fold)
-    if fold == None:
-        cloudClient.create_folder(f"TweetArchive/{folder}")
+async def saveCloud(ctx, link, folder):
+    try:
+        file = requests.get(link)
+        slicelink = str(link).split("/")
+        filename = slicelink[-1]
+        with open(f"Data/{filename}", "w") as F:
+            F.write(file)
+        await ctx.send("saved")
         fold = cloudClient.find(f"TweetArchive/{folder}")
-    cloudClient.upload(f'Data/{filename}', fold[0])
-    os.remove(f"Data/{filename}")
+        await ctx.send(str(fold))
+        if fold == None:
+            cloudClient.create_folder(f"TweetArchive/{folder}")
+            fold = cloudClient.find(f"TweetArchive/{folder}")
+        cloudClient.upload(f'Data/{filename}', fold[0])
+        os.remove(f"Data/{filename}")
+        await ctx.send("done")
 
 async def filterLink(ctx, tweets, user):
     def selvid(vidlist):
@@ -89,7 +91,8 @@ async def filterLink(ctx, tweets, user):
                         for k in m:
                             await ctx.send(">>{}:\n{}".format(k, m[f"{k}"]))
                 for l in urls:
-                    await self.save(l, user)
+                    await ctx.send(f"!! {l}")
+                    await self.save(ctx, l, user)
             except:
                 #tx = t.entities
                 #await self.debug(ctx, tx)
