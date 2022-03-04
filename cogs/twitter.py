@@ -37,6 +37,47 @@ cloudClient = mega.login(
     "kaito12.2004"
 )
 
+class TweetCollector():
+    def __init__(self, client, user, cloud, birb)
+        self.client = client
+        self.cloud = cloud
+        self.birb1 = birb
+        self.loop = True
+        self.last_id = None
+        self.user = user
+
+    async def loophandle(self, last_id=None):
+        ctx = self.client
+        cc = 2
+        if last_id != None:
+            self.last_id = last_id
+        user = self.user
+        while True:
+            if self.loop == False:
+                break
+            try:
+                if last_id == None:
+                    tweets = self.birb1.user_timeline(screen_name=str(user), count=cc)
+                else:
+                    tweets = self.birb1.user_timeline(screen_name=str(user), count=cc, max_id=self.last_id-1)
+                for t in tweets:
+                    await ctx.send(str(t.text))
+                    await ctx.send(str(t.id))
+
+                self.last_id = tweets[-1].id
+            except tweepy.RateLimitError:
+                time.sleep(15*60)
+            time.sleep(2)
+        await ctx.send("loop stopped")
+
+    async def start(self, last_id=None):
+        self.loop = True
+        await self.loophandle(last_id)
+
+    async def stop(self):
+        self.loop = False
+
+
 class Twitter(commands.Cog):
     def __init__(self, client, birb1, birb2, cloud):
         self.client = client
@@ -45,28 +86,22 @@ class Twitter(commands.Cog):
         self.birb2 = birb2
         self.watashi = self.birb2.get_me()
         self.cloud = cloud
-
-    async def limithandle(self, ctx, user):
-        last_id = None
-        cc = 2
-        while True:
-            try:
-                if last_id == None:
-                    tweets = self.birb1.user_timeline(screen_name=str(user), count=cc)
-                else:
-                    tweets = self.birb1.user_timeline(screen_name=str(user), count=cc, max_id=last_id)
-                for t in tweets:
-                    await ctx.send(str(t.text))
-                    await ctx.send(str(t.id))
-                last_id = tweets[-1].id
-            except tweepy.RateLimitError:
-                time.sleep(15*60)
+        self.running = {}
 
     @commands.command()
-    async def gettweets(self, ctx, user):
+    async def gettweets(self, ctx, user, option=None):
         try:
-            await self.limithandle(ctx, user)
-            
+            if str(ctx.channel.id) in self.running:
+                Tobj = self.running[f"{ctx.channrl.id}"]
+                if option == "stop":
+                    await Tobj.stop()
+                elif option == "continue":
+                    await Tobj.start()
+            else:
+                Tobj = TweetCollector(ctx, user, self.cloud, self.birb1)
+                await Tobj.start()
+                self.running[str(ctx.channel.id)] = Tobj
+                
             #if "media" in ttt:
             #    for media in ttt["media"]:
             #        await ctx.send(media["media_url"])
