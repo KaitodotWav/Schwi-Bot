@@ -57,7 +57,7 @@ class Twitter(commands.Cog):
     async def gettweets(self, ctx, user):
         try:
             que = self.birb1.user_timeline(screen_name=str(user))
-            for tweet in self.limithandle(tweepy.Cursor(self.birb1.user_timeline(screen_name=str(user), count=2)))
+            for tweet in self.limithandle(tweepy.Cursor(self.birb1.user_timeline(screen_name=str(user), count=2).item()))
                 await ctx.send(str(tweet.text))
             #if "media" in ttt:
             #    for media in ttt["media"]:
