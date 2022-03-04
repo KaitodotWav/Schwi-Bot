@@ -149,7 +149,7 @@ class Twitter(commands.Cog):
                 jd = json.dump(item, ensure_ascii=false, indent=4)
                 await ctx.send("json! "+str(jd))
             except Exception as e:
-            await ctx.send(f"Error! {e}")
+                await ctx.send(f"Error! {e}")
         else:
             pass
         try:
