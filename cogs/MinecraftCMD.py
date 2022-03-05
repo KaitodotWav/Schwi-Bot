@@ -45,10 +45,14 @@ class Minecraft(commands.Cog):
             serv = MCsrv.Mcsrv(platform)
             self.lastcall[f"{ctx.channel.id}"] = serv
             serv.ping(f"{ip}")
-            if len(options) == 0:
-                options = ("open", "idk")
+            options = list(options)
+            add_opt = False
+            if len(options) <= 0:
+                options = ["open"]
+            elif len(options) == 1:
+                add_opt = True
+
             if options[0] == "open":
-                print("called")
                 if serv.result["online"] == True:
                     try:
                         emb = discord.Embed(title=serv.result["hostname"], description="status: Online")
@@ -73,6 +77,30 @@ class Minecraft(commands.Cog):
                     emb.add_field(name="no connection.", value="server is offline or cant be found.", inline=False)
                     await self.zoe.EditEMB(main_emb, emb)
             
+
+            elif options[0] == "json":
+                build = None
+                opt = options
+                if add_opt:
+                    opt.append("list")
+                if str(opt[1]) == "list":
+                    gkeys = serv.result.keys()
+                    strlist = ""
+                    for i in gkeys:
+                        strlist += f" {i},"
+                    await ctx.send("Keys:\n{}".format(strlist[:-1]))
+                else:
+                    try:
+                        build = serv.result[str(opt[1])]
+                    except:
+                        raise SyntaxError(f"unknown key -> {opt[1]}")
+
+                await main_emb.delete()
+                if build != None:
+                    #await ctx.send(str(build))
+                    create = json.dumps(build, ensure_ascii=False, indent=4)
+                    await ctx.send(str(create))
+
             elif options[0] == "dump":
                 serv.dump("dumps_{}_{}.json".format(serv.result["ip"], serv.result["port"]))
                 await main_emb.delete()

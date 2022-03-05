@@ -1,4 +1,4 @@
-import configparser, discord, random, time
+import configparser, discord, random, time, json
 #import discord_components
 
 def ini_get(ini):
@@ -6,6 +6,77 @@ def ini_get(ini):
     config.read(ini)
     return config
 
+class FileHandler():
+    class ParseError(Exception):
+        pass
+    class SaveError(Exception):
+        pass
+
+    class TEXT():
+        def __init__(self, path, encoding="utf8"):
+            self.path = str(path)
+            self.enc = str(encoding)
+
+        def Load(self):
+            try:
+                with open(self.path, "r", encoding=self.enc) as f:
+                    cache = f.read()
+                return cache
+            except Exception as e:
+                raise ParseError(e)
+
+        def Write(self, text):
+            try:
+                with open(self.path, "w", encoding=self.enc) as f:
+                    f.write(str(text))
+            except Exception as e:
+                raise SaveError(e)
+
+        def Add(self, text):
+            try:
+                with open(self.path, "a", encoding=self.enc) as f:
+                    print(f"{text}", file=f)
+            except Exception as e:
+                raise SaveError(e)
+
+    class JSON():
+        def __init__(self, path, encoding='utf8'):
+            self.path = str(path)
+            self.enc = str(encoding)
+
+        def Load(self):
+            try:
+                with open(self.path, 'r', encoding=self.enc) as f:
+                    cache = json.loads(f.read())
+                return cache
+            except Exception as e:
+                raise ParseError(e)
+
+        def Save(self, items, Indent=4):
+            try:
+                with open(self.path, 'w', encoding=self.enc) as f:
+                    json.dump(items, f, ensure_ascii=False, indent=Indent)
+            except Exception as e:
+                raise SaveError(e)
+
+        def Add(self, items, keys=None, indent=4):
+            cache = Load()
+            coords = []
+            if type(keys) == list:
+                select = cache
+                create = items
+                _wait = []
+                for k in keys:
+                    if k in select and len(_wait) == 0:
+                        select = select[f"{k}"]
+                        coords.append[select]
+                    else:
+                        _wait.append(k)
+                for _ in _wait:
+                    k = _wait.pop()
+                    temp = {}
+                    temp[f"{k}"] = create
+                    create = temp
 class Timer():
     def __init__(self):
         self.startT = None
