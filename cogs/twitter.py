@@ -63,7 +63,7 @@ async def saveCloud(ctx, link, folder):
         pass
 
 
-async def filterLink(ctx, tweets, user):
+async def filterLink(ctx, tweets, user, cloud):
     def selvid(vidlist):
         bitrate = -1
         lvid = None
@@ -100,8 +100,8 @@ async def filterLink(ctx, tweets, user):
                         for k in m:
                             await ctx.send(">>{}:\n{}".format(k, m[f"{k}"]))
                 for l in urls:
-                    #await ctx.send(f"!! {l}")
-                    await saveCloud(ctx, l, user)
+                    if cloud:
+                        await saveCloud(ctx, l, user)
             except:
                 #tx = t.entities
                 #await self.debug(ctx, tx)
@@ -110,12 +110,13 @@ async def filterLink(ctx, tweets, user):
         await ctx.send(f"Error! {e}")
 
 class TweetCollector():
-    def __init__(self, client, user, birb):
+    def __init__(self, client, user, birb, cloud):
         self.client = client
         self.birb1 = birb
         self.loop = True
         self.last_id = None
         self.user = user
+        self.cloud = cloud
 
     async def loophandle(self, last_id=None):
         ctx = self.client
@@ -131,13 +132,17 @@ class TweetCollector():
                     tweets = self.birb1.user_timeline(screen_name=str(user), count=cc)
                 else:
                     tweets = self.birb1.user_timeline(screen_name=str(user), count=cc, max_id=self.last_id-1)
-                await filterLink(ctx, tweets, user)
+                await filterLink(ctx, tweets, user, self.cloud)
                 self.last_id = tweets[-1].id
             #except tweepy.RateLimitError:
                 #time.sleep(15*60)
             except Exception as e:
-                await ctx.send(f"Error! {e}\loop will stop for 15mins")
-                time.sleel(15*60)
+                if str(e) == "list index out of range":
+                    await ctx.send(f"Error! {e}\nloop will now stop...")
+                    break
+                else:
+                    await ctx.send(f"Error! {e}\nloop will stop for 15mins")
+                    time.sleep(15*60)
             time.sleep(2)
         await ctx.send("loop stopped")
 
@@ -162,8 +167,11 @@ class Twitter(commands.Cog):
     @commands.command()
     async def getmedia(self, ctx, user, option=None):
         try:
-            async def makeinstance():
-                Tobj = TweetCollector(ctx, user, self.birb1)
+            async def makeinstance(option):
+                save = False
+                if str(option) == "save":
+                    save = True
+                Tobj = TweetCollector(ctx, user, self.birb1, save)
                 self.running[str(ctx.channel.id)] = Tobj
                 run = self.running[str(ctx.channel.id)]
                 await run.start()
@@ -178,9 +186,9 @@ class Twitter(commands.Cog):
                     else:
                         await ctx.send("fetching tweets in background...")
                 else:
-                    await makeinstance()
+                    await makeinstance(option)
             else:
-                await makeinstance()
+                await makeinstance(option)
             
         except Exception as e:
             await ctx.send(f"Error! {e}")
@@ -192,7 +200,7 @@ class Twitter(commands.Cog):
         except Exception as e:
             await ctx.send(f"Error! {e}")
         else:
-            await filterLink(ctx, tweets, args)
+            await filterLink(ctx, tweets, args, False)
 
     
 
