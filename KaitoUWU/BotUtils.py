@@ -30,14 +30,14 @@ class FileHandler():
                 with open(self.path, "w", encoding=self.enc) as f:
                     f.write(str(text))
             except Exception as e:
-                raise ParseError(e)
+                raise SaveError(e)
 
         def Add(self, text):
             try:
                 with open(self.path, "a", encoding=self.enc) as f:
                     print(f"{text}", file=f)
             except Exception as e:
-                raise ParseError(e)
+                raise SaveError(e)
 
     class JSON():
         def __init__(self, path, encoding='utf8'):
