@@ -12,6 +12,20 @@ class FileHandler():
     class SaveError(Exception):
         pass
 
+    class TEXT():
+        def __init__(self, path, encoding="utf8"):
+            self.path = str(path)
+            self.enc = str(encoding)
+
+        def Load(self):
+            try:
+                with open(self.path, "r", encoding=self.enc) as f:
+                    cache = f.read()
+                return cache
+            except Exception as e:
+                raise ParseError(e)
+
+
     class JSON():
         def __init__(self, path, encoding='utf8'):
             self.path = str(path)
@@ -32,6 +46,22 @@ class FileHandler():
             except Exception as e:
                 raise SaveError(e)
 
+        def Add(self, items, keys=None, indent=4):
+            cache = Load()
+            coords = []
+            if type(keys) == list:
+                select = cache
+                create = items
+                _wait = []
+                for k in keys:
+                    if k in select and len(_wait) == 0:
+                        select = select[f"{k}"]
+                        coords.append[select]
+                    else:
+                        _wait.append(k)
+                for _ in _wait:
+                    k = _wait.pop()
+                    create = items
 class Timer():
     def __init__(self):
         self.startT = None
