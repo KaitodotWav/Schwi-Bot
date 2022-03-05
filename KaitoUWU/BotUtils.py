@@ -25,6 +25,19 @@ class FileHandler():
             except Exception as e:
                 raise ParseError(e)
 
+        def Write(self, text):
+            try:
+                with open(self.path, "w", encoding=self.enc) as f:
+                    f.write(str(text))
+            except Exception as e:
+                raise ParseError(e)
+
+        def Add(self, text):
+            try:
+                with open(self.path, "a", encoding=self.enc) as f:
+                    print(f"{text}", file=f)
+            except Exception as e:
+                raise ParseError(e)
 
     class JSON():
         def __init__(self, path, encoding='utf8'):
@@ -61,7 +74,9 @@ class FileHandler():
                         _wait.append(k)
                 for _ in _wait:
                     k = _wait.pop()
-                    create = items
+                    temp = {}
+                    temp[f"{k}"] = create
+                    create = temp
 class Timer():
     def __init__(self):
         self.startT = None
