@@ -1,5 +1,4 @@
 import configparser, discord, random, time, json
-from msilib.schema import Error
 #import discord_components
 
 def ini_get(ini):
