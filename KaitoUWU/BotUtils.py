@@ -257,14 +257,14 @@ class SENDER():
 
 class Permission():
     def Admin(ctx):
-        admins = [line.strip() for line in open(r"Data\admins.txt")]
+        admins = [line.strip() for line in open("Data/admins.txt")]
         if str(ctx.author.id) in admins:
             pass
         else:
             raise ERROR.AccessDenied("this command is for bot admins only.")
 
     def Block(ctx):
-        blocked = [line.strip() for line in open(r"Data\blocklist.txt")]
+        blocked = [line.strip() for line in open("Data/blocklist.txt")]
         if str(ctx.author.id) in blocked:
             raise ERROR.AccessDenied(f"{ctx.author.id} is blocklisted from using the bot.")
         else:
