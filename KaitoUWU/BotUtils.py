@@ -6,6 +6,30 @@ def ini_get(ini):
     config.read(ini)
     return config
 
+class Logger():
+    def __init__(self, path, startup="", reset=False):
+        self.path = path
+        self.startup = startup
+        self.contents = None
+        try:
+            open(self.path)
+        except:
+            with open(self.path, "w", encoding="utf8") as f:
+                f.write(self.startup)
+        else:
+            if reset:
+                with open(self.path, "w", encoding="utf8") as f:
+                    f.write(self.startup)
+            with open(self.path, "r", encoding="utf8") as r:
+                self.contents = r.read()
+
+    def log(self, content, echo="all"):
+        with open(self.path, "a", encoding="utf8") as f:
+            if echo == "all" or echo == "file":
+                print(content, file=f)
+            if echo == "all" or echo == "console":
+                print("Log: " + content)
+
 class FileHandler():
     class ParseError(Exception):
         pass
@@ -60,7 +84,7 @@ class FileHandler():
                 raise SaveError(e)
 
         def Add(self, items, keys=None, indent=4):
-            cache = Load()
+            cache = self.Load()
             coords = []
             if type(keys) == list:
                 select = cache
@@ -68,15 +92,19 @@ class FileHandler():
                 _wait = []
                 for k in keys:
                     if k in select and len(_wait) == 0:
-                        select = select[f"{k}"]
-                        coords.append[select]
+                        sel = str(select[f"{k}"])
+                        coords.append(sel)
                     else:
                         _wait.append(k)
-                for _ in _wait:
+                for _ in range(len(_wait)):
                     k = _wait.pop()
                     temp = {}
                     temp[f"{k}"] = create
                     create = temp
+                
+                for c in range(len(coords)):
+                    pass
+
 class Timer():
     def __init__(self):
         self.startT = None
@@ -103,9 +131,15 @@ class ERROR():
         pass
     class Send_Error(Exception):
         pass
+    
+    class AccessDenied(Exception):
+        pass
+
+    class SyntaxError(Exception):
+        pass
 
 class EMBEDS():
-    def __init__(self, ico_ini_path="Emotes.ini", Type=None, title=None, description=None, color=None):
+    def __init__(self, ico_ini_path="Data/Emotes.ini", Type=None, title=None, description=None, color=None):
         self.ico_path = ico_ini_path
         self.ico = ini_get(self.ico_path)
         self.title = title
@@ -221,6 +255,33 @@ class SENDER():
         except Exception as e:
             raise ERROR.Send_Error(e)
 
+class Permission():
+    def Admin(ctx):
+        admins = [line.strip() for line in open("Data/admins.txt")]
+        if str(ctx.author.id) in admins:
+            pass
+        else:
+            raise ERROR.AccessDenied("this command is for bot admins only.")
+
+    def Block(ctx):
+        blocked = [line.strip() for line in open("Data/blocklist.txt")]
+        if str(ctx.author.id) in blocked:
+            raise ERROR.AccessDenied(f"{ctx.author.id} is blocklisted from using the bot.")
+        else:
+            pass
+
+    def NSFW(ctx):
+        if ctx.channel.is_nsfw():
+            pass
+        else:
+            raise ERROR.AccessDenied("this command is for NSFW channel only.")
+
+
+
+
 if __name__ == "__main__":
-    a = EMBEDS()
-    a.set_img("Others/mumei_think1")
+    make = {"sample":"dictionary"}
+    make2 = {"sample2":"dictionary2"}
+    samp = FileHandler.JSON("sample.json")
+    samp.Save(make)
+    samp.Add(make2, ["sample", "test", "test2"])
