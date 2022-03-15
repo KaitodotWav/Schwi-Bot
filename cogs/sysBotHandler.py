@@ -17,11 +17,13 @@ class BotTools(commands.Cog):
         self.zoe = BotUtils.SENDER(client)
 
     async def startup(self, ctx):
-        BotUtils.Permission.Admin(ctx)
-        BotUtils.Permission.Block(ctx)
         mainemb = self.main_emb.get()
         main_emb = await self.zoe.ReportEMB(ctx.channel.id, mainemb)
         return main_emb
+
+    async def security(self, ctx):
+        BotUtils.Permission.Admin(ctx)
+        BotUtils.Permission.Block(ctx)
 
     async def Error(self, main_emb, msg):
         send_err = self.emb_err.get(Des="error while executing command.")
@@ -37,6 +39,7 @@ class BotTools(commands.Cog):
     async def reload(self, ctx, extension):
         Main = await self.startup(ctx)
         try:
+            self.security()
             if extension.startswith("sys"):
                 raise SystemError("cogs that's starts with \"sys\" cant be unloaded")
             self.client.unload_extension(f"cogs.{extension}")
@@ -50,6 +53,7 @@ class BotTools(commands.Cog):
     async def load(self, ctx, extension):
         Main = await self.startup(ctx)
         try:
+            self.security()
             self.client.load_extension(f"cogs.{extension}")
             await self.Done(Main, f"{extension} has been loaded")
         except Exception as e:
@@ -59,6 +63,7 @@ class BotTools(commands.Cog):
     async def unload(self, ctx, extension):
         Main = await self.startup(ctx)
         try:
+            await self.security(ctx)
             if extension.startswith("sys"):
                 raise SystemError("cogs that's starts with \"sys\" cant be unloaded")
             self.client.unload_extension(f"cogs.{extension}")
