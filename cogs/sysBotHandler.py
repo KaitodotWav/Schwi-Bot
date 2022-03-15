@@ -39,7 +39,7 @@ class BotTools(commands.Cog):
     async def reload(self, ctx, extension):
         Main = await self.startup(ctx)
         try:
-            self.security()
+            await self.security(ctx)
             if extension.startswith("sys"):
                 raise SystemError("cogs that's starts with \"sys\" cant be unloaded")
             self.client.unload_extension(f"cogs.{extension}")
@@ -53,7 +53,7 @@ class BotTools(commands.Cog):
     async def load(self, ctx, extension):
         Main = await self.startup(ctx)
         try:
-            self.security()
+            await self.security(ctx)
             self.client.load_extension(f"cogs.{extension}")
             await self.Done(Main, f"{extension} has been loaded")
         except Exception as e:
