@@ -2,14 +2,11 @@
 
 #imports
 import discord, time, sys, configparser, requests, json, os
-
-with open("Data\\logs.txt", "a") as log:
-    print("bot logger is connected", file=log)
-
 from KaitoUWU import BotUtils
 
 stime = BotUtils.Timer()
 stime.start()
+logger = BotUtils.Logger("Data\\logs.txt", "Bot logger is now connected\n", True)
 
 from discord.ext import commands
 from KaitoUWU import CMD
@@ -46,35 +43,13 @@ else:
 #Commands
 CMD.Process(client)
 
-@client.command()
-async def reload(ctx, extension):
-    client.unload_extension(f"cogs.{extension}")
-    client.load_extension(f"cogs.{extension}")
-    await ctx.send(f"{extension} has been reloaded")
-
-@client.command()
-async def load(ctx, extension):
-    try:
-        client.load_extension(f"cogs.{extension}")
-        await ctx.send(f"{extension} has been loaded")
-    except Exception as e:
-        erremb = discord.Embed(title="Error!", description=f"{e}", color=0xFF0000)
-        await ctx.send(embed=erremb)
-        
-@client.command()
-async def unload(ctx, extension):
-    try:
-        client.unload_extension(f"cogs.{extension}")
-        await ctx.send(f"{extension} has been unloaded")
-    except Exception as e:
-        erremb = discord.Embed(title="Error!", description=f"{e}", color=0xFF0000)
-        await ctx.send(embed=erremb)
     
 @client.event
 async def on_ready():
     report = int(config["Notifs"]["Reports"])
     zoe = BotUtils.SENDER(client)
-    
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening,
+    name="{} commands".format(config["Schwi"]["Prefix"])))
     try:
         import socket
         host = socket.gethostname()
@@ -85,14 +60,14 @@ async def on_ready():
     finally:
         on_emb = discord.Embed(title=f"{client.user} is now online", description=f"Host:{host}", color=0x00FF00)
         for i in errors:
-            print(i)
+            logger.log("{} {}".format(i[0], i[1]))
             emb = BotUtils.EMBEDS(Type="error", title="Error!", description="while starting the bot.")
             sendE = emb.get()
             sendE.add_field(name=str(i[0]), value=str(i[1]))
             await zoe.ReportEMB(report, sendE)
         btime = stime.end()
         on_emb.add_field(name="elapse bot start", value="{} sec/s".format(round(btime,2)))
-        print(f"{client.user} is now online on host:{host}")
+        logger.log(f"{client.user} is now online on host:{host}")
         await zoe.ReportEMB(report, on_emb, True)
 
 #run
@@ -105,11 +80,11 @@ for filename in os.listdir("./cogs"):
                 client.load_extension(f"cogs.{filename[:-3]}")
             except Exception as e:
                 errors.append((type(e), e))
-                print(f"Error!: {e}")
+                logger.log(f"Error!: {e}")
 try:
     client.run(Token)
 except Exception as e:
     if str(e) == "Cannot connect to host discord.com:443 ssl:default [getaddrinfo failed]":
-        print("Error! no internet.")
+        logger.log("Error! no internet.")
     else:
-        print(e)
+        logger.log(e)
