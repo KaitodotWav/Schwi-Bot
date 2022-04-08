@@ -37,5 +37,5 @@ class BotLogger(commands.Cog):
             emb_err = self.emb.get(Type='error', Title=str(type(e)), Des=str(e))
             await self.send.ReportEMB(self.report, emb_err)
 
-def setup(client):
+def setup(client: commands.Bot):
     client.add_cog(BotLogger(client))

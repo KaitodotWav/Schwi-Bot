@@ -1,8 +1,8 @@
 {
-    "current":"normal",
-    "response":{
-        "normal":"Bot is operating normaly.",
-        "debug":"Bot is on debug mode.",
-        "maintenance":"Bot is currently under maintenance."
+    "current": "normal",
+    "response": {
+        "normal": "Bot is operating normaly.",
+        "debug": "Bot is on debug mode.",
+        "maintenance": "Bot is currently under maintenance."
     }
 }

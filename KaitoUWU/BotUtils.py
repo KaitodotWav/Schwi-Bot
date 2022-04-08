@@ -47,21 +47,21 @@ class FileHandler():
                     cache = f.read()
                 return cache
             except Exception as e:
-                raise ParseError(e)
+                raise FileHandler.ParseError(e)
 
         def Write(self, text):
             try:
                 with open(self.path, "w", encoding=self.enc) as f:
                     f.write(str(text))
             except Exception as e:
-                raise SaveError(e)
+                raise FileHandler.SaveError(e)
 
         def Add(self, text):
             try:
                 with open(self.path, "a", encoding=self.enc) as f:
                     print(f"{text}", file=f)
             except Exception as e:
-                raise SaveError(e)
+                raise FileHandler.SaveError(e)
 
     class JSON():
         def __init__(self, path, encoding='utf8'):
@@ -74,14 +74,14 @@ class FileHandler():
                     cache = json.loads(f.read())
                 return cache
             except Exception as e:
-                raise ParseError(e)
+                raise FileHandler.ParseError(e)
 
         def Save(self, items, Indent=4):
             try:
                 with open(self.path, 'w', encoding=self.enc) as f:
                     json.dump(items, f, ensure_ascii=False, indent=Indent)
             except Exception as e:
-                raise SaveError(e)
+                raise FileHandler.SaveError(e)
 
         def Add(self, items, keys=None, indent=4):
             cache = self.Load()
@@ -107,8 +107,8 @@ class FileHandler():
 
 class Timer():
     def __init__(self):
-        self.startT = None
-        self.endT = None
+        self.startT = 1
+        self.endT = 2
     
     def start(self):
         self.startT = time.time()
@@ -232,9 +232,12 @@ class SENDER():
         except Exception as e:
             raise ERROR.Send_Error(e)
 
-    async def EditEMB(self, msg, new):
+    async def EditEMB(self, msg, new, Comp=None):
         try:
-            send = await msg.edit(embed=new)
+            if Comp != None:
+                send = await msg.edit(embed=new, components=Comp)
+            else:
+                send = await msg.edit(embed=new)
             return send
         except Exception as e:
             raise ERROR.Send_Error(e)
@@ -257,7 +260,7 @@ class SENDER():
 
 class Permission():
     def Admin(ctx):
-        admins = [line.strip() for line in open("Data/admins.txt")]
+        admins = [line.strip() for line in open("Data/admin.txt")]
         if str(ctx.author.id) in admins:
             pass
         else:
@@ -266,7 +269,7 @@ class Permission():
     def Block(ctx):
         blocked = [line.strip() for line in open("Data/blocklist.txt")]
         if str(ctx.author.id) in blocked:
-            raise ERROR.AccessDenied(f"{ctx.author.id} is blocklisted from using the bot.")
+            raise ERROR.AccessDenied(f"<@{ctx.author.id}> is blocklisted from using the bot.")
         else:
             pass
 
@@ -276,12 +279,8 @@ class Permission():
         else:
             raise ERROR.AccessDenied("this command is for NSFW channel only.")
 
-
-
-
-if __name__ == "__main__":
-    make = {"sample":"dictionary"}
-    make2 = {"sample2":"dictionary2"}
-    samp = FileHandler.JSON("sample.json")
-    samp.Save(make)
-    samp.Add(make2, ["sample", "test", "test2"])
+class Response():
+    load = EMBEDS(Type="loading", title="Processing", description="please wait...")
+    scc = EMBEDS(Type="success", title="Success!", color=0x00FF00)
+    err = EMBEDS(Type="error", title="Error!")
+    FF = EMBEDS(Type="fail", title="Operation Failed!", color=0xFFA500)

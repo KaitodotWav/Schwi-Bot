@@ -10,9 +10,6 @@ Python programs:
 
 --『CMD.py』= for extension of Schwi.py, used to extend bot commands without writing very long code on main program
 
---『mcsrvstat.py』= module i created to fetch data about minecraft servers using mcsrvstat API
-
-
 Folders:
 
 --  /cogs = bot commands and functions
@@ -21,6 +18,7 @@ Folders:
 
 --  /KaitoUWU = all packages created for schwii
 
+--  /Data = contains all files needed by the bot
 
 
 Data files:
@@ -38,14 +36,6 @@ this bot is currently being coded base on the first bot "Poyoyo bot"
 still not done but already functional
 
 a faster, less buggy and improved discord bot
-
--- Slow coding process --
-
-unfortunately my laptop broke
-so im just using my phone to code the bot
-im so limited on what things i can do
-i cannot debug the bot easily
-making the coding process really slow
 
 -------------------------------------------------------
 Branches:
