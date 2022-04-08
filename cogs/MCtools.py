@@ -61,6 +61,7 @@ class ServerPing():
     def __init__(self, ip, platform="all"):
         self.ip = ip
         self.plat = platform
+        self.embs = BotUtils.Response()
         self.res = []
         self.raw = []
 
@@ -133,7 +134,7 @@ class ServerPing():
                 Embeds.append(emb)
         else:
             if len(self.raw) > 0:
-                emb = discord.Embed(title=self.ip, description="status: Offline")
+                emb = self.embs.four04.get(Title=self.ip, Des="status: Offline")
                 emb.add_field(name="Plarform", value=f"{self.plat}".replace("all", "Unknown"))
                 emb.add_field(name="no connection.", value="server is offline or cant be found.", inline=False)
                 Embeds.append(emb)
