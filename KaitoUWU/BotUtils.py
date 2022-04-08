@@ -283,4 +283,5 @@ class Response():
     load = EMBEDS(Type="loading", title="Processing", description="please wait...")
     scc = EMBEDS(Type="success", title="Success!", color=0x00FF00)
     err = EMBEDS(Type="error", title="Error!")
+    four04 = EMBEDS(Type="notfound", title="NotFound")
     FF = EMBEDS(Type="fail", title="Operation Failed!", color=0xFFA500)
