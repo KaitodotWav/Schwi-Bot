@@ -1,4 +1,4 @@
-discord
+discord.py
 configparse
 requests
 praw
@@ -7,3 +7,4 @@ psycopg2
 mcstatus
 tweepy
 mega.py
+discord-components

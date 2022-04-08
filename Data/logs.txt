@@ -1,0 +1,6 @@
+Bot logger is now connected
+[cogs] MCtools has been loaded
+[cogs] sysBotHandler has been loaded
+[cogs] sysLogger has been loaded
+[bot] Poyoyo#8107 is now online on host:Kaito
+prefix: t!

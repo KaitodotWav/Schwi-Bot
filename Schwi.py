@@ -16,33 +16,12 @@ config.read("Properties.ini")
 errors = []
 
 #Auth
-Token = str(config["Schwi"]["Token"])
-
-client = commands.Bot(command_prefix = str(config["Schwi"]["Prefix"]))
-
-"""
-#Instance
-def ShowWarning(TITLE, MESSAGE):
-    root = Tk()
-    root.withdraw()
-    TKmsg.showwarning(title=TITLE, message=MESSAGE)
-from tendo import singleton
-
-try:
-    me = singleton.SingleInstance()
-except:
-    warnThread = Thread(target=ShowWarning, args=("Error: Multiple Instance", "Main program is already running."))
-    warnThread.start()
-    WriteF("Error: Reject launch\nMain program is already running", "MainReport.txt")
-    print("done")
-    sys.exit(-1)
-else:
-    pass
-"""
+Token = str(config["Schwi"]["token"])
+intents = discord.Intents(messages=True, guilds=True)
+client = commands.Bot(command_prefix = str(config["Schwi"]["Prefix"]), intents=intents)
 
 #Commands
-CMD.Process(client)
-
+#CMD.Process(client)
     
 @client.event
 async def on_ready():
@@ -67,7 +46,7 @@ async def on_ready():
             await zoe.ReportEMB(report, sendE)
         btime = stime.end()
         on_emb.add_field(name="elapse bot start", value="{} sec/s".format(round(btime,2)))
-        logger.log(f"{client.user} is now online on host:{host}")
+        logger.log(f"[bot] {client.user} is now online on host:{host}\nprefix: {config['Schwi']['Prefix']}")
         await zoe.ReportEMB(report, on_emb, True)
 
 #run
@@ -78,13 +57,15 @@ for filename in os.listdir("./cogs"):
         else:
             try:
                 client.load_extension(f"cogs.{filename[:-3]}")
+                logger.log(f"[cogs] {filename[:-3]} has been loaded")
             except Exception as e:
                 errors.append((type(e), e))
                 logger.log(f"Error!: {e}")
+
 try:
     client.run(Token)
 except Exception as e:
     if str(e) == "Cannot connect to host discord.com:443 ssl:default [getaddrinfo failed]":
-        logger.log("Error! no internet.")
+        logger.log("[system] Error! no internet.")
     else:
         logger.log(e)
