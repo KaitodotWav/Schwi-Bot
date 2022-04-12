@@ -123,7 +123,7 @@ class ServerPing():
                 emb.add_field(name="version",value=server.ver, inline=False)
                 emb.add_field(name="players",value=server.players, inline=True)
                 try:
-                    emb.add_field(name="list", value=LtoS(r.result["players"]["list"]), inline=False)
+                    emb.add_field(name="list", value=f'{LtoS(r.result["players"]["list"])}', inline=False)
                 except:
                     pass
                 try:
@@ -170,7 +170,7 @@ class Minecraft(commands.Cog, name="Minecraft Server"):
         except Exception as e:
             await ctx.send(f"Error {e}")"""
 
-    @tasks.loop(seconds=5)
+    @tasks.loop(seconds=1)
     async def Button_Events(self):
         bullshit = "this message is not needed but discord is being such a bullshit throwing errors if i dont made this useless message so yeah fuck you."
         def checker(m):

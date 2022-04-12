@@ -1,5 +1,5 @@
 import configparser, discord, random, time, json
-#import discord_components
+from discord_components import DiscordComponents, ComponentsBot, Button
 
 def ini_get(ini):
     config = configparser.ConfigParser()
@@ -18,10 +18,10 @@ class Logger():
                 f.write(self.startup)
         else:
             if reset:
-                with open(self.path, "w", encoding="utf8") as f:
-                    f.write(self.startup)
-            with open(self.path, "r", encoding="utf8") as r:
-                self.contents = r.read()
+                with open(self.path, "w", encoding="utf8") as f: f.write("")
+            if len(self.startup) > 0:
+                with open(self.path, "a", encoding="utf8") as a: print(self.startup, file=a)
+            with open(self.path, "r", encoding="utf8") as r: self.contents = r.read()
 
     def log(self, content, echo="all"):
         with open(self.path, "a", encoding="utf8") as f:
@@ -284,3 +284,62 @@ class Response():
     scc = EMBEDS(Type="success", title="Success!", color=0x00FF00)
     err = EMBEDS(Type="error", title="Error!")
     FF = EMBEDS(Type="fail", title="Operation Failed!", color=0xFFA500)
+
+class Pages():
+    def __init__(self, client):
+        self.pages = {}
+        self.client = client
+        DiscordComponents(client)
+
+    def build_pages(self, embs):
+        build = {"current":0}
+        pages = {}
+        for n, emb in enumerate(embs):
+            pages[f"{n}"] = emb
+        build["pages"] = pages
+        ID = time.time()
+        #print(ID)
+        return build, ID
+
+    def Book(self, embs):
+        pages, ID = self.build_pages(embs)
+        self.pages[f"{ID}"] = pages
+        Butt = [[
+            Button(label="Prev", custom_id=f"P{ID}"),
+            Button(label="Next", custom_id=f"N{ID}")
+            ]]
+        return pages["pages"]["0"], Butt
+
+    def Handler(self, ID, OP):
+        get = self.pages[ID]
+        Max = len(get["pages"])
+        if OP == "N":
+            if get["current"] != Max -1:
+                get["current"] += 1
+        elif OP == "P":
+            if get["current"] != 0:
+                get["current"] -= 1
+        return get["pages"][str(get["current"])]
+
+    async def Button_Events(self, callback):
+        bullshit = "this message is not needed but discord is being such a bullshit throwing errors if i dont made this useless message so yeah fuck you."
+        def checker(m):
+            if m.custom_id[1:] in self.pages: return m
+            else: pass
+        event = await self.client.wait_for("button_click", check = checker)
+        ID = event.custom_id[1:]
+        Action = event.custom_id[0]
+        get = self.Handler(ID, Action)
+        await callback(event, get)
+        await event.respond(content=f"done, {bullshit}")
+
+    
+if __name__ == "__main__":
+    test = []
+    for t in range(8):
+        test.append(f"test{t}")
+    fk = Pages()
+    fk.Book(test)
+    while True:
+        ID = input("ID: ")
+        print(fk.Handler(ID, "N"))

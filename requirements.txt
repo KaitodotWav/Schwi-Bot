@@ -1,4 +1,5 @@
 discord.py
+saucenao-api
 configparse
 requests
 praw
