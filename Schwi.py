@@ -6,7 +6,7 @@ from KaitoUWU import BotUtils
 
 stime = BotUtils.Timer()
 stime.start()
-logger = BotUtils.Logger("Data\\logs.txt", "Bot logger is now connected\n", True)
+logger = BotUtils.Logger("Data\\logs.txt", "Bot logger is now connected", True)
 
 from discord.ext import commands
 from KaitoUWU import CMD
