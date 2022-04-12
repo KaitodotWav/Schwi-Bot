@@ -123,7 +123,7 @@ class ServerPing():
                 emb.add_field(name="version",value=server.ver, inline=False)
                 emb.add_field(name="players",value=server.players, inline=True)
                 try:
-                    emb.add_field(name="list", value=f'{LtoS(r.result["players"]["list"])}', inline=False)
+                    emb.add_field(name="list", value=f'\\{LtoS(r.result["players"]["list"])}', inline=False)
                 except:
                     pass
                 try:
