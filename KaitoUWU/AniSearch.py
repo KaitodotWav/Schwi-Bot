@@ -129,22 +129,7 @@ class TraceMoe():
                 with open(path, "w", encoding="utf8") as F:
                     conv = json.dump(target, F, ensure_ascii=False, indent=3)
                 return path
-            else: raise ConvertError("search has not been called")
-
-class SauceSy():
-    def __init__(self, token=False):
-        self.token = token
-        self.client = self.login(token)
-
-    def login(self, token):
-        sauce = None
-        if type(token) == str: sauce = SauceNao(token)
-        return sauce
-
-
-
-
-        
+            else: raise ConvertError("search has not been called")        
         
 if __name__ == "__main__":
     engine = TraceMoe.Syncro()
