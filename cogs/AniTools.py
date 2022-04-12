@@ -171,7 +171,7 @@ class Main(commands.Cog, name="For Weebs"):
             for att in contents: await self.SauceSy(ctx, att)
         else:
             event = await self.client.wait_for("message", check=checker)
-            for att in event.attachments: await self.tracemoe(ctx, att)
+            for att in event.attachments: await self.SauceSy(ctx, att)
                 
 def setup(client: commands.Bot):
     client.add_cog(Main(client))
