@@ -161,9 +161,17 @@ class Main(commands.Cog, name="For Weebs"):
     @commands.command()
     async def sauce(self, ctx):
         """Anime, Manga & fanarts search engine"""
+        def checker(m):
+            if m.author.id == ctx.message.author.id and m.channel.id == ctx.channel.id:
+                print("match")
+                print(m.attachments)
+                return m
         contents = ctx.message.attachments
         if len(contents) > 0:
             for att in contents: await self.SauceSy(ctx, att)
-
+        else:
+            event = await self.client.wait_for("message", check=checker)
+            for att in event.attachments: await self.tracemoe(ctx, att)
+                
 def setup(client: commands.Bot):
     client.add_cog(Main(client))
