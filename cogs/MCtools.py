@@ -61,7 +61,6 @@ class ServerPing():
     def __init__(self, ip, platform="all"):
         self.ip = ip
         self.plat = platform
-        self.embs = BotUtils.Response()
         self.res = []
         self.raw = []
 
@@ -124,7 +123,7 @@ class ServerPing():
                 emb.add_field(name="version",value=server.ver, inline=False)
                 emb.add_field(name="players",value=server.players, inline=True)
                 try:
-                    emb.add_field(name="list", value=LtoS(r.result["players"]["list"]), inline=False)
+                    emb.add_field(name="list", value=f'\\{LtoS(r.result["players"]["list"])}', inline=False)
                 except:
                     pass
                 try:
@@ -134,7 +133,7 @@ class ServerPing():
                 Embeds.append(emb)
         else:
             if len(self.raw) > 0:
-                emb = self.embs.four04.get(Title=self.ip, Des="status: Offline")
+                emb = discord.Embed(title=self.ip, description="status: Offline")
                 emb.add_field(name="Plarform", value=f"{self.plat}".replace("all", "Unknown"))
                 emb.add_field(name="no connection.", value="server is offline or cant be found.", inline=False)
                 Embeds.append(emb)
@@ -171,7 +170,7 @@ class Minecraft(commands.Cog, name="Minecraft Server"):
         except Exception as e:
             await ctx.send(f"Error {e}")"""
 
-    @tasks.loop(seconds=5)
+    @tasks.loop(seconds=1)
     async def Button_Events(self):
         bullshit = "this message is not needed but discord is being such a bullshit throwing errors if i dont made this useless message so yeah fuck you."
         def checker(m):
