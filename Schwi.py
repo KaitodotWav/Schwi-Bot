@@ -20,7 +20,7 @@ def start(bot):
     async def on_ready():
         zoe = BotUtils.SENDER(client)
         await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening,
-        name="f{BOT.prefix} commands"))
+        name=f"{BOT.prefix} commands"))
         try: host = socket.gethostname()
         except Exception as e:
             print(e)
@@ -57,8 +57,8 @@ def start(bot):
             logger.log("[system] Error! no internet.")
         else: logger.log(e)
 
-if len(sys.argv) > 1:
-    start(sys.argv[1])
+
+if len(sys.argv) >= 2: start(str(sys.argv[1]))
 else:
     if __name__ == "__main__":
         start("Schwi")

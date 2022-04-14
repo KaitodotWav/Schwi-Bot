@@ -1,1 +1,1 @@
-worker:python Schwi.py 
+worker: python Schwi.py Schwi
