@@ -1,9 +1,9 @@
-Bot logger is now connected
+Schwi loaded! starting up.
 AniTools logger is now connected
 [cogs] AniTools has been loaded
 [cogs] MCtools has been loaded
 [cogs] sysBotHandler has been loaded
 [cogs] sysLogger has been loaded
-[bot] Poyoyo#8107 is now online on host:Kaito
-prefix: p!
+[bot] Schwi#0547 is now online on host:Kaito
+prefix: s!
 [AniTools] Buttons scan has been started

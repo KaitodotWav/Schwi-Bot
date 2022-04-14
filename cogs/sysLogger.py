@@ -1,16 +1,17 @@
-import discord
+import discord, time, configparser
 from discord.ext import commands, tasks
-import time, configparser
-from KaitoUWU import BotUtils
+from KaitoUWU import BotUtils, containers
 
-config = configparser.ConfigParser()
-config.read("Properties.ini")
+temp = [line.strip('') for line in open("Data\\logs.txt")]
+botr = temp[0].split(" ")
+botl = botr[0]
 
 class BotLogger(commands.Cog):
     def __init__(self, client):
         self.client = client
-        self.report = int(config['Notifs']['Reports'])
-        self.logCH = int(config['Notifs']['Logs'])
+        BOT = containers.Bot(botl)
+        self.report = BOT.report
+        self.logCH = BOT.logs
         self.emb = BotUtils.EMBEDS()
         self.send = BotUtils.SENDER(self.client)
         self.endline = 0
