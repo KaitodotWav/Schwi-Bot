@@ -1,6 +1,9 @@
 Bot logger is now connected
+AniTools logger is now connected
+[cogs] AniTools has been loaded
 [cogs] MCtools has been loaded
 [cogs] sysBotHandler has been loaded
 [cogs] sysLogger has been loaded
 [bot] Poyoyo#8107 is now online on host:Kaito
-prefix: t!
+prefix: p!
+[AniTools] Buttons scan has been started

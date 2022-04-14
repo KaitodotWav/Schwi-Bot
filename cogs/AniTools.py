@@ -95,7 +95,7 @@ class Main(commands.Cog, name="For Weebs"):
     async def ButEvents(self):
         try:
             async def callback(event, emb): await event.message.edit(embed=emb)
-            await self.pager.Button_Events(callback, 1)
+            await self.pager.Button_Events(callback)
         except Exception as e: print(e)
 
     async def tracemoe(self, ctx, attc):
