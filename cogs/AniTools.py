@@ -106,7 +106,8 @@ class Main(commands.Cog, name="For Weebs"):
     async def tracemoe(self, ctx, attc):
         mainemb = await self.startup(ctx)
         try:
-            url = attc.url
+            if type(attc) == str: url = attc
+            else: url = attc.url
             engine = AniSearch.TraceMoe.Asyncro()
             find = await engine.search(url)
             result = find["result"]
@@ -124,10 +125,11 @@ class Main(commands.Cog, name="For Weebs"):
         except Exception as e:
             await self.Error(mainemb, e)
 
-    async def SauceSy(self, ctx, attc):
+    async def SauceSy(self, ctx, attc=None):
         mainemb = await self.startup(ctx)
         try:
-            url = attc.url
+            if type(attc) == str: url = attc
+            else: url = attc.url
             embs= []
             IDX = 1
             try: results = self.snao.from_url(url)
@@ -147,13 +149,12 @@ class Main(commands.Cog, name="For Weebs"):
             await self.Error(mainemb, e)
         
     @commands.command()
-    async def anisauce(self, ctx):
+    async def anisauce(self, ctx, link=None):
         """
         searching tool mainly for Anime"""
+        if link != None: await self.tracemoe(ctx, link)
         def checker(m):
             if m.author.id == ctx.message.author.id and m.channel.id == ctx.channel.id:
-                print("match")
-                print(m.attachments)
                 return m
         contents = ctx.message.attachments
         if len(contents) > 0:
@@ -163,12 +164,11 @@ class Main(commands.Cog, name="For Weebs"):
             for att in event.attachments: await self.tracemoe(ctx, att)
 
     @commands.command()
-    async def sauce(self, ctx):
+    async def sauce(self, ctx, link=None):
         """Anime, Manga & fanarts search engine"""
+        if link != None: await self.SauceSy(ctx, link)
         def checker(m):
             if m.author.id == ctx.message.author.id and m.channel.id == ctx.channel.id:
-                print("match")
-                print(m.attachments)
                 return m
         contents = ctx.message.attachments
         if len(contents) > 0:
