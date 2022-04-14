@@ -58,9 +58,9 @@ class Embeds():
             inf += f"**frame:** {result.est_time}\n"
         elif isinstance(result, BookSauce):
             inf += f"**Chapter:** {result.part}\n"
-        s_index_name = result.index_name.split(" ")
+        s_index_name = result.index_name.split("-")
         f_index_name = ""
-        for s in s_index_name[:-2]: f_index_name += f"{s} "
+        for s in s_index_name[:-2]: f_index_name += f"{s}-"
         inf += f"{f_index_name}\n"
         if len(result.urls) > 0: emb.add_field(name="external links", value=exl[1:-1], inline=False)
         emb.add_field(name="info:", value=inf)

@@ -52,8 +52,7 @@ async def on_ready():
 #run
 for filename in os.listdir("./cogs"):
     if filename.endswith(".py"):
-        if filename.startswith("_"):
-            pass
+        if filename.startswith("_"): pass
         else:
             try:
                 client.load_extension(f"cogs.{filename[:-3]}")
@@ -62,10 +61,8 @@ for filename in os.listdir("./cogs"):
                 errors.append((type(e), e))
                 logger.log(f"Error!: {e}")
 
-try:
-    client.run(Token)
+try: client.run(Token)
 except Exception as e:
     if str(e) == "Cannot connect to host discord.com:443 ssl:default [getaddrinfo failed]":
         logger.log("[system] Error! no internet.")
-    else:
-        logger.log(e)
+    else: logger.log(e)
