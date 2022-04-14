@@ -44,24 +44,22 @@ class Embeds():
     def SNAO(result) -> discord.Embed:
         #[r.author, r.index_id, r.index_name, r.similarity, r.thumbnail, r.title, r.raw]
         author = result.author
+        s_index_name = result.index_name.split("-")
+        f_index_name = s_index_name[0]
         if author is None: author = "Unknown"
-        emb = discord.Embed(title=result.title, description=f"**Author:** {author}")
+        emb = discord.Embed(title=result.title, description=f_index_name)
         emb.set_thumbnail(url=result.thumbnail)
         exl = ""
-        for l in range(len(result.urls)):
-            exl += f" [link{l+1}]({result.urls[l]}) |"
+        for l in range(len(result.urls)): exl += f" [link{l+1}]({result.urls[l]}) |"
         inf = ""
         inf += f'**similarity:** {result.similarity}%\n'
+        if result.author != None: inf += f"**Author:** {author}"
         if isinstance(result, VideoSauce):
             inf += f"**episode:** {result.part}\n"
             inf += f"**year:** {result.year}\n"
             inf += f"**frame:** {result.est_time}\n"
         elif isinstance(result, BookSauce):
             inf += f"**Chapter:** {result.part}\n"
-        s_index_name = result.index_name.split("-")
-        f_index_name = s_index_name[0]
-        #for s in s_index_name[:-2]: f_index_name += f"{s}-"
-        inf += f"{f_index_name}\n"
         if len(result.urls) > 0: emb.add_field(name="external links", value=exl[1:-1], inline=False)
         emb.add_field(name="info:", value=inf)
         return emb
