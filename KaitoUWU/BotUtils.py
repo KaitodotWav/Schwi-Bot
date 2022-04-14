@@ -321,7 +321,7 @@ class Pages():
                 get["current"] -= 1
         return get["pages"][str(get["current"])]
 
-    async def Button_Events(self, callback):
+    async def Button_Events(self, callback, timeout=None):
         bullshit = "this message is not needed but discord is being such a bullshit throwing errors if i dont made this useless message so yeah fuck you."
         def checker(m):
             if m.custom_id[1:] in self.pages: return m
@@ -331,7 +331,11 @@ class Pages():
         Action = event.custom_id[0]
         get = self.Handler(ID, Action)
         await callback(event, get)
-        await event.respond(content=f"done, {bullshit}")
+        res = await event.respond(content=f"done, {bullshit}")
+        if timeout != None:
+            time.sleep(timeout)
+            res.delete()
+            
 
     
 if __name__ == "__main__":

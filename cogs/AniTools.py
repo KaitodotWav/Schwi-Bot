@@ -94,14 +94,9 @@ class Main(commands.Cog, name="For Weebs"):
     @tasks.loop(seconds=1)
     async def ButEvents(self):
         try:
-            async def callback(event, emb):
-                #print("called")
-                await event.message.edit(embed=emb)
-            #print("started")
-            await self.pager.Button_Events(callback)
-            #print("done")
-        except Exception as e:
-            print(e)
+            async def callback(event, emb): await event.message.edit(embed=emb)
+            await self.pager.Button_Events(callback, 1)
+        except Exception as e: print(e)
 
     async def tracemoe(self, ctx, attc):
         mainemb = await self.startup(ctx)

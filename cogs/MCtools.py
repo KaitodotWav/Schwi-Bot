@@ -202,21 +202,17 @@ class Minecraft(commands.Cog, name="Minecraft Server"):
                         Button(label="Java", custom_id=ids[0]),
                         Button(label="Bedrock", custom_id=ids[1])
                         ]]
-                    for i in range(len(ids)):
-                        self.butevents[ids[i]] = emb[i]
+                    for i in range(len(ids)): self.butevents[ids[i]] = emb[i]
                     await self.zoe.EditEMB(mainemb, emb[0], compo)
 
             elif options[0] == "dump":
                 paths = server.json_dump()
                 await mainemb.delete()
-                for p in paths:
-                    await ctx.send(file=discord.File(f"{p}"))
+                for p in paths: await ctx.send(file=discord.File(f"{p}"))
 
-            else:
-                raise SyntaxError("unknown command -> {}".format(options[0]))
+            else: raise SyntaxError("unknown command -> {}".format(options[0]))
 
-        except Exception as e:
-            await self.Error(mainemb, e)
+        except Exception as e: await self.Error(mainemb, e)
              
 def setup(client: commands.Bot):
     client.add_cog(Minecraft(client))
