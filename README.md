@@ -10,10 +10,15 @@ Bot for discord
 ### `ping [server ip] [platform: java or bedrock] [options]`
 
 Sends minecraft server information
+
 Options:
--- open <default> : sends server information
--- dump : sends server data in json format
+
+`open` (default) : sends server information
+
+`dump` : sends server data in json format
+
 Note:
+
 player list is only available on java and if server allowed player query
 
 ## For Weebs
@@ -22,13 +27,13 @@ player list is only available on java and if server allowed player query
 
 Anime picture search engine
 
-Sends Anime titles and sources using pictures using tracemoe API
+Sends Anime titles and sources using screenshots of anime scene using tracemoe API
 
--- link : sends anime title/sources using link to a picture file
+-- link : sends anime title/sources using link to a screenshot
 
-ex: `blank`
+ex: `anisauce https://images.plurk.com/32B15UXxymfSMwKGTObY5e.jpg`
 
--- pictures : sends anime title/sources base on uploaded pictures
+-- pictures : sends anime title/sources base on uploaded screeshot
 
 "sends results depends on how many pictures has been sent"
 
@@ -38,9 +43,11 @@ Anime, Manga, Hentai, Doujin & Fan arts search engine
 
 Send Anime, Manga or Doujin titles and sources using pictures and clips
 
+this command can only be used 6x per 30secs and 200x per 24hrs due to rate limitations
+
 -- link : search title/sources using link to a picture or clip
 
-ex: `blank`
+ex: `sauce https://images.plurk.com/32B15UXxymfSMwKGTObY5e.jpg`
 
 -- pictures : search title/sources using uploaded picture/clips
 
@@ -61,9 +68,9 @@ all files that contains `_` as prefix is under rework, trash or restricted so i 
 
 all files that contains `sys` as prefix are by default will be loaded automatically and cant be unloaded
 
-`MCtools.py` contains all Minecraft commands
+`MCtools.py` contains all [Minecraft](https://github.com/KaitodotWav/Schwi-Bot#minecraft) commands
 
-`AniTools.py` contains all ForWeebs commands
+`AniTools.py` contains all [ForWeebs](https://github.com/KaitodotWav/Schwi-Bot#for-weebs) commands
 
 `sysBotHandler.py` contains commands for bot management and for bot admins only
 
