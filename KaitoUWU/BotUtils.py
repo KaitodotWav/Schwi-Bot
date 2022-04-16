@@ -106,7 +106,8 @@ class FileHandler():
                     pass
 
 class Timer():
-    def __init__(self):
+    def __init__(self, Round=None):
+        self.round = Round
         self.startT = 1
         self.endT = 2
     
@@ -114,10 +115,18 @@ class Timer():
         self.startT = time.time()
 
     def end(self):
-        self.endT = time.time()
-        ET = self.elapse()
-        self.reset()
-        return ET
+        try:
+            self.endT = time.time()
+            ET = self.elapse()
+            self.reset()
+        except:
+            return "Unknown"
+        else:
+            if self.round != None:
+                return round(ET, self.round)
+            else:
+                return ET
+        
 
     def elapse(self):
         elp = self.endT - self.startT

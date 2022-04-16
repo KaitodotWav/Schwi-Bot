@@ -44,7 +44,6 @@ class BotTools(commands.Cog, name="Bot Management"):
         DD = self.embs.scc.get(Des=msg)
         await self.zoe.EditEMB(main_emb, DD)
 
-    @commands.command()
     async def reload(self, ctx, extension):
         Main = await self.startup(ctx)
         try:
@@ -57,7 +56,6 @@ class BotTools(commands.Cog, name="Bot Management"):
         except Exception as e:
             await self.Error(Main, e)
 
-    @commands.command()
     async def load(self, ctx, extension):
         Main = await self.startup(ctx)
         try:
@@ -66,8 +64,7 @@ class BotTools(commands.Cog, name="Bot Management"):
             await self.Done(Main, f"{extension} has been loaded")
         except Exception as e:
             await self.Error(Main, e)
-            
-    @commands.command()
+
     async def unload(self, ctx, extension):
         Main = await self.startup(ctx)
         try:
@@ -80,7 +77,15 @@ class BotTools(commands.Cog, name="Bot Management"):
             await self.Error(Main, e)
 
     @commands.command()
+    async def ext(self, ctx, operation, extension):
+        """Bot extension manager"""
+        if operation == "load": await self.load(ctx, extension)
+        elif operation == "unload": await self.unload(ctx, extension)
+        elif operation == "reload": await self.reload(ctx, extension)
+
+    @commands.command()
     async def add_user(self, ctx, user_id, operation):
+        """add user into admin/block list"""
         def checker(ID):
             adm = [line.strip() for line in open("Data\\admin.txt", "r")]
             bll = [line.strip() for line in open("Data\\blocklist.txt", "r")]
@@ -104,6 +109,7 @@ class BotTools(commands.Cog, name="Bot Management"):
 
     @commands.command()
     async def remove_user(self, ctx, user_id, operation):
+        """remove user from admin/block list"""
         Main = await self.startup(ctx)
         try:
             await self.security(ctx)
@@ -128,6 +134,7 @@ class BotTools(commands.Cog, name="Bot Management"):
 
     @commands.command()
     async def status(self, ctx, *option):
+        """bot status manager"""
         try:
             BotUtils.Permission.Block(ctx)
             stat = BotUtils.FileHandler.JSON(r"Data\botstatus.json")

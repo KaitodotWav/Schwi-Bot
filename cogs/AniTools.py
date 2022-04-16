@@ -16,7 +16,7 @@ class RateLimitError(Exception):
     pass
 
 class Embeds():
-    def tracermoe(result) -> discord.Embed:
+    def tracermoe(result, color=None) -> discord.Embed:
         def othertl(tlk, tlv):
             final = ""
             for t in range(len(tlk)):
@@ -29,7 +29,9 @@ class Embeds():
                 tllist[t] = meta["title"][t]
         Tk = list(tllist.keys())
         Tv = list(tllist.values())
-        emb = discord.Embed(title=tllist[Tk[0]], description=f"**episode:** {result['episode']}")
+        if color != None:
+            emb = discord.Embed(title=tllist[Tk[0]], description=f"**episode:** {result['episode']}", color=color)
+        else: emb = discord.Embed(title=tllist[Tk[0]], description=f"**episode:** {result['episode']}")
         if len(tllist) > 1: emb.add_field(name="Other Titles", value=othertl(Tk[1:], Tv[1:]), inline=False)
         emb.set_image(url=result["image"])
         inf = ""
@@ -41,13 +43,15 @@ class Embeds():
         emb.add_field(name="Frames", value=f"**from: **{F}\n**to:** {T}")
         return emb
 
-    def SNAO(result) -> discord.Embed:
+    def SNAO(result, color=None) -> discord.Embed:
         #[r.author, r.index_id, r.index_name, r.similarity, r.thumbnail, r.title, r.raw]
         author = result.author
         s_index_name = result.index_name.split("-")
         f_index_name = s_index_name[0]
         if author is None: author = "Unknown"
-        emb = discord.Embed(title=result.title, description=f_index_name)
+        if color != None:
+            emb = discord.Embed(title=result.title, description=f_index_name, color=color)
+        else: emb = discord.Embed(title=result.title, description=f_index_name)
         emb.set_thumbnail(url=result.thumbnail)
         exl = ""
         for l in range(len(result.urls)): exl += f" [link{l+1}]({result.urls[l]}) |"
@@ -63,7 +67,6 @@ class Embeds():
         if len(result.urls) > 0: emb.add_field(name="external links", value=exl[1:-1], inline=False)
         emb.add_field(name="info:", value=inf)
         return emb
-        
             
 class Main(commands.Cog, name="For Weebs"):
     def __init__(self, client):
@@ -75,7 +78,7 @@ class Main(commands.Cog, name="For Weebs"):
         self.nao_l = None
         
     async def startup(self, ctx):
-        mainemb = self.embs.load.get()
+        mainemb = self.embs.load.get(color=ctx.author.color)
         main_emb = await self.zoe.ReportEMB(ctx.channel.id, mainemb)
         return main_emb
 
@@ -110,7 +113,7 @@ class Main(commands.Cog, name="For Weebs"):
             for r in result:
                 c = result.index(r) + 1
                 t = len(result)
-                emb = Embeds.tracermoe(r)
+                emb = Embeds.tracermoe(r, color=ctx.author.color)
                 emb.set_footer(text=f"showing {c} out of {t} results from trace.moe API")
                 embs.append(emb)
             preview, buttons = self.pager.Book(embs)
@@ -131,7 +134,7 @@ class Main(commands.Cog, name="For Weebs"):
             for r in results:
                 c = IDX
                 t = len(results)
-                emb = Embeds.SNAO(r)
+                emb = Embeds.SNAO(r, color=ctx.author.color)
                 emb.set_footer(text=f"showing {c} out of {t} results from saucenao API")
                 embs.append(emb)
                 IDX += 1

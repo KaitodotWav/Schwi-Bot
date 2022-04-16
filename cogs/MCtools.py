@@ -103,7 +103,7 @@ class ServerPing():
         else: raise ServerError("ping has not been called.")
         return dumped
 
-    def get_embed(self):
+    def get_embed(self, color=None):
         Embeds = []
         if len(self.res) > 0:
             for r in self.res:
@@ -115,7 +115,9 @@ class ServerPing():
                     "online: {}, max: {}".format(r.result["players"]["online"], r.result["players"]["max"])
                 )
                 try:
-                    emb = discord.Embed(title=r.result["hostname"], description="platform: {}".format(r.result["platform"]))
+                    if color != None:
+                        emb = discord.Embed(title=r.result["hostname"], description="platform: {}".format(r.result["platform"]), color=color)
+                    else: emb = discord.Embed(title=r.result["hostname"], description="platform: {}".format(r.result["platform"]))
                 except:
                     emb = discord.Embed(title=r.result["ip"], description="platform: {}".format(r.result["platform"]))
                 emb.add_field(name="ip",value=server.ip)
@@ -123,7 +125,7 @@ class ServerPing():
                 emb.add_field(name="version",value=server.ver, inline=False)
                 emb.add_field(name="players",value=server.players, inline=True)
                 try:
-                    emb.add_field(name="list", value=f'\\{LtoS(r.result["players"]["list"])}', inline=False)
+                    emb.add_field(name="list", value=f'{LtoS(r.result["players"]["list"])}', inline=False)
                 except:
                     pass
                 try:
@@ -151,7 +153,7 @@ class Minecraft(commands.Cog, name="Minecraft Server"):
         self.Button_Events.start()
 
     async def startup(self, ctx):
-        mainemb = self.embs.load.get()
+        mainemb = self.embs.load.get(color=ctx.author.color)
         main_emb = await self.zoe.ReportEMB(ctx.channel.id, mainemb)
         return main_emb
 
@@ -183,6 +185,7 @@ class Minecraft(commands.Cog, name="Minecraft Server"):
         
     @commands.command()
     async def ping(self, ctx, ip=None, platform="all", *options):
+        """Sends minecraft server information"""
         mainemb = await self.startup(ctx)
         try:
             BotUtils.Permission.Block(ctx)
@@ -194,7 +197,7 @@ class Minecraft(commands.Cog, name="Minecraft Server"):
                 
             if options[0] == "open":
                 tid = time.time()
-                emb = server.get_embed()
+                emb = server.get_embed(ctx.author.color)
                 if len(emb) == 1: await self.zoe.EditEMB(mainemb, emb[0])
                 elif len(emb) == 2:
                     ids = [f"jav{tid}", f"bangbros{tid}"]

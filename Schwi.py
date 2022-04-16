@@ -10,7 +10,7 @@ else:
     if __name__ == "__main__":
         bot = "Schwi"
 
-stime = BotUtils.Timer()
+stime = BotUtils.Timer(2)
 stime.start()
 logger = BotUtils.Logger("Data\\logs.txt", f"{bot} loaded! starting up.", True)
 BOT = containers.Bot(bot)
@@ -18,7 +18,7 @@ errors = []
 
 #Auth
 intents = discord.Intents(messages=True, guilds=True)
-client = commands.Bot(command_prefix = BOT.prefix, intents=intents)
+client = commands.Bot(command_prefix = BOT.prefix, help_command=BOT.help(),intents=intents)
 
 @client.event
 async def on_ready():
@@ -38,9 +38,14 @@ async def on_ready():
             sendE = emb.get()
             sendE.add_field(name=str(i[0]), value=str(i[1]))
             await zoe.ReportEMB(BOT.report, sendE)
-        btime = stime.end()
-        on_emb.add_field(name="elapse bot start", value="{} sec/s".format(round(btime,2)))
-        logger.log(f"[bot] {client.user} is now online on host:{host}\nprefix: {BOT.prefix}")
+        startup = stime.end()
+        inf = ""
+
+        if type(startup) == float or type(startup) == int: inf += f"**startup:** {startup}sec/s\n"
+        else: inf += f"**startup:** {startup}\n"
+        inf += f"**prefix:** {BOT.prefix}\n"
+        on_emb.add_field(name="Info", value=f"{inf}")
+        logger.log(f"[bot] {client.user} is now online on host:{host}\nprefix: {BOT.prefix}, startup: {startup}sec/s")
         await zoe.ReportEMB(BOT.report, on_emb, True)
 
 #run

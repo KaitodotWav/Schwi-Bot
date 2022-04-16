@@ -5,5 +5,5 @@ AniTools logger is now connected
 [cogs] sysBotHandler has been loaded
 [cogs] sysLogger has been loaded
 [bot] Schwi#0547 is now online on host:Kaito
-prefix: s!
+prefix: t!, startup: 4.15sec/s
 [AniTools] Buttons scan has been started
