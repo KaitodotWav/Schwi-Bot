@@ -4,7 +4,7 @@ from discord.ext import commands
 class NewHelp(commands.HelpCommand):
     def __init__(self):
         super().__init__()
-        with open("Data\\cmdlinks.json") as c:
+        with open("Data/cmdlinks.json") as c:
             links = json.loads(c.read())
         self.cogl = links["cogs"]
         self.cmdl = links["commands"]
